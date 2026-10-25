@@ -1,8 +1,9 @@
 name: Publish browser preview
 
-# Enable GitHub Pages → Source: GitHub Actions before the first manual run.
-# No push trigger: publishing remains an explicit maintainer action.
+# Enable GitHub Pages → Source: GitHub Actions before the first deployment.
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
