@@ -1,0 +1,21 @@
+{
+  "my-polar-scene": {
+    "version": 1,
+    "author": "your-github-name",
+    "license": "GPL-3.0-only",
+    "assets": ["assets/my-polar-scene.png"],
+    "preview": "catalog/previews/my-polar-scene.png",
+    "metadata": {
+      "id": "my-polar-scene",
+      "renderer": "polar",
+      "name": "Название сцены",
+      "subtitle": "Короткое описание",
+      "description": "Описание мира и его движения.",
+      "image": "assets/my-polar-scene.png",
+      "width": 1672,
+      "height": 941,
+      "control": "weather",
+      "weatherLabel": "Снег"
+    }
+  }
+}

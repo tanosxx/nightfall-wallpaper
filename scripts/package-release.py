@@ -47,8 +47,9 @@ def main():
             'License: GPL-3.0-only (see LICENSE).\n', encoding='utf-8')
         with tarfile.open(archive, 'w:gz') as target:
             target.add(folder, arcname=folder_name)
+    scene_packs = sorted((args.output/'scenes').glob('*.zip'))
     sums = ''.join(f'{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.name}\n'
-                   for path in (bundle, archive))
+                   for path in (bundle, archive, *scene_packs))
     (args.output/'SHA256SUMS').write_text(sums, encoding='ascii')
     print(json.dumps({'version':checked['version'], 'bundle':str(bundle),
                       'installerArchive':str(archive), 'checksums':str(args.output/'SHA256SUMS')}))

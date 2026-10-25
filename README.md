@@ -1,6 +1,6 @@
 # Nightfall
 
-Живые обои для **GNOME Shell 50**: семь атмосферных сцен, библиотека в отдельном окне и переключение из верхней панели. Текущий выпуск — **v15**.
+Живые обои для **GNOME Shell 50**: семь атмосферных сцен, библиотека в отдельном окне и переключение из верхней панели. Текущий выпуск — **v16**.
 
 [Предпросмотр в браузере](https://tanosxx.github.io/nightfall-wallpaper/) · [Скачать релиз](https://github.com/tanosxx/nightfall-wallpaper/releases) · [Сообщить о проблеме](https://github.com/tanosxx/nightfall-wallpaper/issues)
 
@@ -20,7 +20,9 @@
 | **Город над облаками** | Облака между башнями, турбины, маяки и далёкая гроза. |
 | **Пепел титанов** | Пожары, дым, горящие корабли, работа у разрушенных роботов и индикаторы экзокостюма. |
 
-В v15 все семь сцен входят в установочный пакет. **Онлайн-каталог в приложении, скачивание отдельных сцен и самостоятельная публикация сцен сообществом пока не реализованы.** Планы описаны в [ROADMAP](docs/ROADMAP.md).
+В v16 встроен **«Ночной рубеж»**, остальные сцены скачиваются отдельно из вкладки **«Каталог»**. Общий индекс, превью и пакеты хранятся на GitHub. После установки сцена работает без сети. При обновлении v15 прежняя коллекция переносится в локальную библиотеку автоматически.
+
+На сайте можно посмотреть сцену и скачать её ZIP. В приложении откройте **Каталог → Установить из файла…**. Для новых работ доступен процесс публикации через проверяемый pull request: [формат пакета и участие сообщества](docs/SCENE-PACKS.md). Прямая отправка работы из приложения и автоматическая публикация без проверки пока отсутствуют.
 
 ## Установка готового релиза
 
@@ -32,13 +34,13 @@ gnome-shell --version
 
 Нужны `gnome-extensions`, системный Python 3 с `python3-gi`, GTK 4 и libadwaita. Установщик не устанавливает системные зависимости автоматически. Для готового релиза не нужны Node.js, Pillow, NumPy, отдельный `gjs` CLI или `glib-compile-schemas`.
 
-1. Скачайте **`nightfall-v15-linux.tar.gz`** и `SHA256SUMS` со страницы [релиза](https://github.com/tanosxx/nightfall-wallpaper/releases).
+1. Скачайте **`nightfall-v16-linux.tar.gz`** и `SHA256SUMS` со страницы [релиза](https://github.com/tanosxx/nightfall-wallpaper/releases).
 2. В каталоге загрузки выполните:
 
 ```bash
 sha256sum --check --ignore-missing SHA256SUMS
-tar -xzf nightfall-v15-linux.tar.gz
-cd nightfall-v15
+tar -xzf nightfall-v16-linux.tar.gz
+cd nightfall-v16
 bash install.sh --bundle ./nightfall@local.shell-extension.zip
 ```
 
@@ -54,10 +56,15 @@ gnome-extensions prefs nightfall@local
 
 ## Управление
 
-- В библиотеке выберите сцену; меню Nightfall в верхней панели позволяет быстро переключаться между ними.
+- **«Установлено»** показывает локальные сцены. Выберите сцену; меню Nightfall в верхней панели позволяет быстро переключаться между ними.
+- **«Каталог»** загружает общий индекс и небольшие превью. Нажмите **«Скачать»**; появившуюся сцену можно сразу выбрать. Новая версия пакета получает кнопку обновления.
+- **«Удалить»** освобождает место скачанной сцены. При удалении активной сцены приложение переключается на встроенный город; встроенную сцену удалить нельзя.
+- **«Установить из файла…»** принимает проверяемый ZIP-пакет сцены. Интернет при такой установке не нужен.
 - **«Живые обои»** включает анимацию или возвращает обычный фон, сохраняя меню Nightfall.
 - **«Пауза»** останавливает сцену. Регулятор меняет интенсивность осадков, течения, ветра или активности выбранного мира.
 - Космическая станция имеет режимы рабочей смены, ночи и техобслуживания.
+
+Скачанные сцены хранятся в `${XDG_DATA_HOME:-~/.local/share}/nightfall/scenes/`, кэш каталога и превью — в `${XDG_CACHE_HOME:-~/.cache}/nightfall/`. Удаление расширения сохраняет локальную коллекцию для повторной установки. При недоступности сети каталог показывает сохранённую копию, если она уже была загружена.
 
 Настройки сохраняются между входами. Анимация приостанавливается при блокировке экрана и в обзоре GNOME. Движение курсора не управляет сценой.
 
@@ -118,10 +125,11 @@ nightfall_build_dir="$(mktemp -d)"
 python3 package-extension.py \
   --stage "$nightfall_build_dir/nightfall@local" \
   --archive "$nightfall_build_dir/nightfall@local.shell-extension.zip"
-gjs -m tests/desktop-bundle.test.js "$nightfall_build_dir/nightfall@local"
+python3 scripts/build-scene-packs.py
+python3 scripts/check-packaged-scenes.py "$nightfall_build_dir/nightfall@local"
 ```
 
-Node.js нужен для тестов JavaScript, GJS/Cairo — для нативных проверок. Отдельные генераторы и проверки изображений требуют Pillow и NumPy; они не являются шагами установки. Подробнее — [CONTRIBUTING](CONTRIBUTING.md).
+Node.js нужен для тестов JavaScript, GJS/Cairo — для нативных проверок. Тест интерфейса запускается отдельно: `xvfb-run -a gjs -m tests/prefs-catalog.test.js` (GTK 4, libadwaita, Xvfb). Отдельные генераторы и проверки изображений требуют Pillow и NumPy; они не являются шагами установки. Подробнее — [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Лицензия и происхождение изображений
 
@@ -133,14 +141,14 @@ Node.js нужен для тестов JavaScript, GJS/Cairo — для нати
 
 ## English — quick install
 
-Nightfall v15 provides seven offline animated wallpapers for **GNOME Shell 50**. Download `nightfall-v15-linux.tar.gz` from [Releases](https://github.com/tanosxx/nightfall-wallpaper/releases), extract it, then run as your regular user:
+Nightfall v16 provides a GitHub-hosted scene catalogue for **GNOME Shell 50**. One scene is bundled; download the others from the Catalogue tab and use them offline. Existing v15 scenes are preserved on upgrade. Download `nightfall-v16-linux.tar.gz` from [Releases](https://github.com/tanosxx/nightfall-wallpaper/releases), extract it, then run as your regular user:
 
 ```bash
-cd nightfall-v15
+cd nightfall-v16
 bash install.sh --bundle ./nightfall@local.shell-extension.zip
 gnome-extensions prefs nightfall@local
 ```
 
 The installer requires `gnome-extensions`, system Python 3 with PyGObject, GTK 4 and libadwaita. Do not use `sudo`. Log out and back in if GNOME still holds an older extension version in memory. Run `bash uninstall.sh` from the extracted folder to uninstall.
 
-Artwork was generated with AI tools. Project materials use GPL-3.0-only where applicable rights exist; preserved third-party notices are listed in [NOTICE.md](NOTICE.md). Individual scene downloads and a community publishing service are **planned, not available in v15**.
+Artwork was generated with AI tools. Project materials use GPL-3.0-only where applicable rights exist; preserved third-party notices are listed in [NOTICE.md](NOTICE.md). Individual scene downloads, updates, local ZIP import and removal are available. Community contributions use reviewed pull requests; direct in-app uploads are not implemented.

@@ -16,6 +16,7 @@ assert(stage.query_file_type(Gio.FileQueryInfoFlags.NONE, null) === Gio.FileType
 const registryFile = stage.resolve_relative_path('scene-registry.js');
 assert(registryFile.query_exists(null), 'The supplied stage has no scene-registry.js');
 const {SCENES, getScene, createRenderer} = await import(registryFile.get_uri());
+const {getAvailableScene} = await import(stage.resolve_relative_path('installed-scenes.js').get_uri());
 assert(JSON.stringify(SCENES.map(scene => scene.id)) === JSON.stringify(expected),
     'The packaged catalogue must contain all seven scenes in their expected order');
 assert(getScene('invalid-scene').id === 'nightfall', 'Invalid scene fallback is broken');
@@ -49,10 +50,12 @@ for (const scene of SCENES) {
     const started = GLib.get_monotonic_time();
     try {
         assert(getScene(scene.id) === scene, `${scene.id}: registry lookup disagrees with catalogue`);
-        const image = stage.resolve_relative_path(scene.image);
+        const installed = getAvailableScene(scene.id, stage.get_path());
+        assert(installed.id === scene.id, `${scene.id}: package was not installed in the test library`);
+        const image = Gio.File.new_for_path(`${installed.root}/${installed.image}`);
         assert(image.query_exists(null), `${scene.id}: missing packaged photograph ${scene.image}`);
         base = Cairo.ImageSurface.createFromPNG(image.get_path());
-        renderer = await createRenderer(scene.id, stage.get_path());
+        renderer = await createRenderer(scene.id, installed.root, installed);
         for (const method of ['update', 'paint', 'destroy'])
             assert(typeof renderer[method] === 'function', `${scene.id}: missing ${method} contract`);
         // A renderer may finish asynchronous preparation before its first paint.

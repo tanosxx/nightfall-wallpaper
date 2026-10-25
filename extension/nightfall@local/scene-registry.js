@@ -12,30 +12,33 @@ export function getScene(id) {
     return SCENES.find(scene => scene.id === id) ?? SCENES[0];
 }
 
-export async function createRenderer(sceneId, extensionPath) {
-    const scene = getScene(sceneId);
+export async function createRenderer(sceneId, extensionPath, descriptor = null) {
+    const scene = descriptor ?? getScene(sceneId);
+    const rendererId = scene.renderer ?? scene.id;
+    if (!SCENES.some(item => item.id === rendererId))
+        throw new Error('Unsupported scene renderer');
     const imagePath = `${extensionPath}/${scene.image}`;
-    if (scene.id === 'titans') {
+    if (rendererId === 'titans') {
         const {createTitansRenderer} = await import('./titans-renderer.js');
         return createTitansRenderer(imagePath);
     }
-    if (scene.id === 'abyss') {
+    if (rendererId === 'abyss') {
         const {createAbyssRenderer} = await import('./abyss-renderer.js');
         return createAbyssRenderer(imagePath);
     }
-    if (scene.id === 'junction') {
+    if (rendererId === 'junction') {
         const {createJunctionRenderer} = await import('./junction-renderer.js');
         return createJunctionRenderer(imagePath);
     }
-    if (scene.id === 'cloudcity') {
+    if (rendererId === 'cloudcity') {
         const {createCloudcityRenderer} = await import('./cloudcity-renderer.js');
         return createCloudcityRenderer(imagePath);
     }
-    if (scene.id === 'station') {
+    if (rendererId === 'station') {
         const {createStationRenderer} = await import('./station-renderer.js');
         return createStationRenderer(imagePath);
     }
-    if (scene.id === 'polar') {
+    if (rendererId === 'polar') {
         const {createPolarRenderer} = await import('./polar-renderer.js');
         return createPolarRenderer(imagePath);
     }

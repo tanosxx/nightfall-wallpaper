@@ -15,6 +15,8 @@ import json
 from pathlib import Path
 import re
 import shutil
+import subprocess
+import sys
 import tempfile
 from urllib.parse import unquote, urlsplit
 
@@ -113,6 +115,8 @@ def allowed_source(path: Path) -> bool:
         return False
     if path.parts[0] == 'assets':
         return path.suffix.lower() in ASSET_SUFFIXES
+    if path.parts[0] == 'catalog':
+        return path == Path('catalog/index.json') or (len(path.parts) == 3 and path.parts[1] == 'previews' and path.suffix == '.png')
     if len(path.parts) == 1:
         return path.suffix in CODE_SUFFIXES
     if path.parts[:2] == ('extension', 'nightfall@local'):
@@ -160,6 +164,18 @@ def validate_site(site: Path) -> None:
     for page in entrypoints(site):
         if not (site / page).is_file():
             raise ValueError(f'Missing catalogue page: {page}')
+    catalog = json.loads((site / 'catalog/index.json').read_text(encoding='utf-8'))
+    if catalog.get('formatVersion') != 1 or catalog.get('engineVersion') != 1 or len(catalog.get('scenes', [])) < 7:
+        raise ValueError('Missing or incompatible download catalogue')
+    for scene in catalog['scenes']:
+        if not re.fullmatch(r'[a-z][a-z0-9-]{0,63}', scene.get('id', '')):
+            raise ValueError('Invalid scene identifier in public catalogue')
+        if not re.fullmatch(r'assets/[A-Za-z0-9][A-Za-z0-9._-]*\.png', scene.get('image', '')) or not (site / scene['image']).is_file():
+            raise ValueError(f"Missing or invalid catalogue background: {scene['id']}")
+        preview = site / 'catalog/previews' / f"{scene['id']}.png"
+        data = preview.read_bytes()
+        if len(data) != scene['previewBytes'] or hashlib.sha256(data).hexdigest() != scene['previewSha256']:
+            raise ValueError(f"Damaged catalogue preview: {scene['id']}")
 
 
 def build(output: Path = ROOT / 'dist' / 'site') -> dict:
@@ -169,6 +185,7 @@ def build(output: Path = ROOT / 'dist' / 'site') -> dict:
         raise ValueError('Build output must be a directory below this repository’s dist/')
     selected = collect()
     dist.mkdir(exist_ok=True)
+    subprocess.run([sys.executable, str(ROOT / 'scripts/build-scene-packs.py')], check=True, stdout=subprocess.DEVNULL)
     with tempfile.TemporaryDirectory(prefix='.pages-stage-', dir=dist) as directory:
         stage = Path(directory) / 'site'
         stage.mkdir()
@@ -176,6 +193,15 @@ def build(output: Path = ROOT / 'dist' / 'site') -> dict:
             destination = stage / path
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / path, destination)
+        for file in (dist / 'catalog').rglob('*'):
+            if file.is_file():
+                path = file.relative_to(dist)
+                if not allowed_source(path):
+                    raise ValueError(f'Unexpected catalogue output: {path}')
+                destination = stage / path
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(file, destination)
+                selected.add(path)
         (stage / '.nojekyll').write_text('', encoding='utf-8')
         manifest = {'entrypoints': [p.as_posix() for p in entrypoints()], 'files': {
             path.as_posix(): {'bytes': (stage / path).stat().st_size,

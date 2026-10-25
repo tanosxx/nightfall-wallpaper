@@ -2,9 +2,12 @@
 <schemalist>
   <schema id="org.gnome.shell.extensions.nightfall" path="/org/gnome/shell/extensions/nightfall/">
     <key name="selected-scene" type="s">
-      <choices><choice value="nightfall"/><choice value="polar"/><choice value="station"/><choice value="abyss"/><choice value="junction"/><choice value="cloudcity"/><choice value="titans"/></choices>
       <default>'nightfall'</default>
       <summary>Selected wallpaper scene</summary>
+    </key>
+    <key name="library-revision" type="u">
+      <default>0</default>
+      <summary>Reload the local scene library after package changes</summary>
     </key>
     <key name="paused" type="b">
       <default>false</default>

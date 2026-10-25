@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Check out sources
         uses: actions/checkout@v4
+      - name: Install catalogue build runtime
+        run: sudo apt-get update && sudo apt-get install --yes --no-install-recommends gjs python3
       - name: Build self-contained preview
         run: python3 scripts/build-pages.py
       - name: Validate static links and public bundle

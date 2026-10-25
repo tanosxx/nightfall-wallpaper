@@ -26,15 +26,15 @@ class VerifyBundleTests(unittest.TestCase):
         self.directory = Path(self.temporary.name)
 
     def bundle(self, *, extra=None, metadata_change=None, manifest_change=None, mutate=None):
-        files = {name: b'fixture data' for name in checker.REQUIRED}
-        metadata = {'uuid':checker.UUID, 'version':15, 'shell-version':['50'],
+        files = {name: b'fixture data' for name in checker.REQUIRED | checker.PACK_MANAGER_FILES}
+        metadata = {'uuid':checker.UUID, 'version':16, 'shell-version':['50'],
                     'settings-schema':'org.gnome.shell.extensions.nightfall'}
         if metadata_change:
             metadata.update(metadata_change)
         files['metadata.json'] = json.dumps(metadata).encode()
         if extra:
             files.update(extra)
-        manifest = {'version':15, 'scenes':checker.SCENES,
+        manifest = {'version':16, 'scenes':checker.SCENES, 'bundledScenes':['nightfall'],
                     'files':{name:hashlib.sha256(data).hexdigest() for name,data in files.items()}}
         if manifest_change:
             manifest_change(manifest)
@@ -51,9 +51,9 @@ class VerifyBundleTests(unittest.TestCase):
         path = self.bundle(extra={'extra.js':b'not extracted'})
         destination = self.directory/'installer'
         result = checker.verify_bundle(path, destination)
-        self.assertEqual(result['version'], 15)
+        self.assertEqual(result['version'], 16)
         self.assertEqual(sorted(str(p.relative_to(destination)) for p in destination.rglob('*') if p.is_file()),
-                         sorted(checker.INSTALL_FILES))
+                         sorted(checker.INSTALL_FILES + ('scene-manager.py',)))
 
     def test_traversal_and_non_posix_paths_rejected(self):
         for name in ['../escaped', '/absolute', 'folder/../../escaped', 'folder\\escaped',
@@ -94,7 +94,7 @@ class VerifyBundleTests(unittest.TestCase):
             checker.verify_bundle(path)
 
     def test_missing_file_rejected(self):
-        path = self.bundle(mutate=lambda files:files.pop('assets/titans.png'))
+        path = self.bundle(mutate=lambda files:files.pop('assets/city.png'))
         with self.assertRaisesRegex(ValueError, 'required files'):
             checker.verify_bundle(path)
 
@@ -106,7 +106,7 @@ class VerifyBundleTests(unittest.TestCase):
                     checker.verify_bundle(self.bundle(metadata_change=change))
 
     def test_catalogue_and_version_mismatch_rejected(self):
-        for change in [{'version':16}, {'version':True}, {'scenes':['nightfall']}]:
+        for change in [{'version':17}, {'version':True}, {'scenes':['nightfall']}]:
             with self.subTest(change=change):
                 path = self.bundle(manifest_change=lambda manifest:manifest.update(change))
                 with self.assertRaisesRegex(ValueError, 'version or scene catalogue'):

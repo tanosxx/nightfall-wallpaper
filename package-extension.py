@@ -35,7 +35,10 @@ def build(stage, archive):
             raise FileNotFoundError(f'Missing native scene assets: {folder}')
     shutil.copytree(SOURCE, stage, ignore=shutil.ignore_patterns(
         'assets', 'app', '__pycache__', '*.pyc', '*.bak', '*.tmp', 'bundle-manifest.json'))
-    shutil.copytree(ROOT / 'assets', stage / 'assets')
+    # Keep one scene available offline at first launch. Other assets are
+    # independent catalogue packages; the installer migrates older collections.
+    (stage / 'assets').mkdir()
+    shutil.copy2(ROOT / 'assets' / 'city.png', stage / 'assets' / 'city.png')
     shutil.copytree(ROOT / 'app', stage / 'app')
     for notice in ['LICENSE', 'NOTICE.md', 'ASSETS.md']:
         shutil.copy2(ROOT / notice, stage / notice)
@@ -43,7 +46,8 @@ def build(stage, archive):
     hashes = {p.relative_to(stage).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
               for p in sorted(stage.rglob('*')) if p.is_file()}
     version = json.loads((stage / 'metadata.json').read_text())['version']
-    manifest = {'version': version, 'scenes': [s['id'] for s in catalogue], 'files': hashes}
+    manifest = {'version': version, 'scenes': [s['id'] for s in catalogue],
+                'bundledScenes': ['nightfall'], 'files': hashes}
     (stage / 'bundle-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
     archive.parent.mkdir(parents=True, exist_ok=True)
     with ZipFile(archive, 'w', compression=ZIP_DEFLATED) as output:

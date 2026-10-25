@@ -56,13 +56,33 @@ class PublicSiteTests(unittest.TestCase):
 
     def test_gallery_defers_images_and_public_links_exist(self):
         script = (SITE / 'library.js').read_text()
+        cards = (SITE / 'catalog-view.js').read_text()
         html = (SITE / 'index.html').read_text()
-        self.assertIn('<img data-src=', script)
-        self.assertNotIn('<img src=', script)
-        self.assertIn('loading="lazy"', script)
+        self.assertIn('image.dataset.src =', cards)
+        self.assertNotIn('.innerHTML', script + cards)
+        self.assertIn("image.loading = 'lazy'", cards)
         self.assertIn('image.src=image.dataset.src', script)
         self.assertIn('https://github.com/tanosxx/nightfall-wallpaper/releases/latest', html)
         self.assertIn('aria-label="Nightfall на GitHub"', html)
+        self.assertIn('catalog/previews/${scene.id}.png', cards)
+        self.assertIn("fetch('./catalog/index.json'", script)
+        self.assertIn('link.textContent=', script)
+        self.assertIn('CONTRIBUTING.md', html)
+        self.assertIn("if(id==='nightfall')", script)
+        self.assertIn('Встроена в приложение', script)
+
+    def test_download_catalogue_is_small_and_archives_are_not_mirrored_on_pages(self):
+        catalog = json.loads((SITE / 'catalog/index.json').read_text())
+        self.assertEqual(catalog['engineVersion'], 1)
+        self.assertGreaterEqual(len(catalog['scenes']), 7)
+        self.assertLess(sum(scene['previewBytes'] for scene in catalog['scenes']), len(catalog['scenes']) * 300_000)
+        version = json.loads((ROOT / 'extension/nightfall@local/metadata.json').read_text())['version']
+        for scene in catalog['scenes']:
+            self.assertTrue(scene['package']['url'].startswith(f'https://github.com/tanosxx/nightfall-wallpaper/releases/download/v{version}/'))
+            self.assertTrue((SITE / 'catalog/previews' / (scene['id'] + '.png')).is_file())
+        self.assertFalse(list(SITE.rglob('*.zip')))
+        self.assertFalse((SITE / 'catalog/scenes.json').exists())
+        self.assertFalse((SITE / 'catalog/scene.example.json').exists())
 
 
 if __name__ == '__main__':

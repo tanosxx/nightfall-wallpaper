@@ -7,7 +7,8 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 
-import {SCENES, STATION_MODES, getScene, createRenderer} from './scene-registry.js';
+import {STATION_MODES, createRenderer} from './scene-registry.js';
+import {listAvailableScenes} from './installed-scenes.js';
 import {intensityLabels} from './scene-catalog.js';
 
 const FRAME_MS = 42; // At most 24 frames/second.
@@ -32,12 +33,18 @@ export default class NightfallExtension extends Extension {
 
         try {
             this._settings = this.getSettings();
+            this._scenes = listAvailableScenes(this.path);
             this._weather = this._settings.get_double('weather');
             this._createIndicator();
+            this._connect(this._settings, 'changed::library-revision', () => {
+                this._scenes = listAvailableScenes(this.path);
+                this._populateSceneMenu();
+                this._loadScene();
+            });
             this._connect(this._settings, 'changed::selected-scene', () => this._loadScene());
             this._connect(this._settings, 'changed::background-enabled', () => this._loadScene());
             this._connect(this._settings, 'changed::station-mode', () => {
-                if (this._scene?.id === 'station' && this._renderer && !this._renderError) {
+                if (this._scene?.renderer === 'station' && this._renderer && !this._renderError) {
                     try {
                         this._renderer.setMode(this._settings.get_string('station-mode'), this._settings.get_boolean('paused'));
                         this._renderer.update(0, NEUTRAL_POINTER, this._weather);
@@ -98,17 +105,9 @@ export default class NightfallExtension extends Extension {
         const menu = this._indicator.menu;
         this._statusItem = new PopupMenu.PopupMenuItem('Nightfall', {reactive: false});
         menu.addMenuItem(this._statusItem);
-        this._sceneItems = new Map();
-        for (const scene of SCENES) {
-            const item = menu.addAction(scene.name, () => {
-                this._settings.set_string('selected-scene', scene.id);
-                this._settings.set_boolean('background-enabled', true);
-                // Selecting an already selected scene also retries a failed load.
-                if (this._renderError && !this._loading)
-                    this._loadScene();
-            });
-            this._sceneItems.set(scene.id, item);
-        }
+        this._sceneSection = new PopupMenu.PopupMenuSection();
+        menu.addMenuItem(this._sceneSection);
+        this._populateSceneMenu();
         menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
         this._backgroundItem = new PopupMenu.PopupSwitchMenuItem('Живые обои', true);
         this._backgroundItem.connect('toggled', (_item, state) => {
@@ -137,8 +136,28 @@ export default class NightfallExtension extends Extension {
         }));
         menu.addMenuItem(this._modeItem);
         menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-        this._libraryItem = menu.addAction('Библиотека сцен…', () => this.openPreferences());
+        this._libraryItem = menu.addAction('Библиотека и каталог…', () => this.openPreferences());
         this._syncMenu();
+    }
+
+    _populateSceneMenu() {
+        this._sceneSection.removeAll();
+        this._sceneItems = new Map();
+        for (const scene of this._scenes) {
+            const item = this._sceneSection.addAction(scene.name, () => {
+                this._settings.set_string('selected-scene', scene.id);
+                this._settings.set_boolean('background-enabled', true);
+                // Selecting an already selected scene also retries a failed load.
+                if (this._renderError && !this._loading)
+                    this._loadScene();
+            });
+            this._sceneItems.set(scene.id, item);
+        }
+    }
+
+    _selectedScene() {
+        return this._scenes.find(scene => scene.id === this._settings.get_string('selected-scene'))
+            ?? this._scenes.find(scene => scene.id === 'nightfall') ?? this._scenes[0];
     }
 
     _syncMenu() {
@@ -147,7 +166,8 @@ export default class NightfallExtension extends Extension {
         this._updatingMenu = true;
         const enabled = this._settings.get_boolean('background-enabled');
         const paused = this._settings.get_boolean('paused');
-        const scene = getScene(this._settings.get_string('selected-scene'));
+        const scene = this._selectedScene();
+        if (!scene) { this._updatingMenu = false; return; }
         this._statusItem.label.text = this._loading ? 'Загрузка сцены…'
             : this._renderError ? 'Сцена недоступна' : 'Nightfall';
         this._indicator.accessible_name = `Nightfall: ${enabled ? scene.name : 'Обычные обои'}`;
@@ -165,7 +185,7 @@ export default class NightfallExtension extends Extension {
         }
         const modeId = this._settings.get_string('station-mode');
         const mode = STATION_MODES.find(item => item.id === modeId) ?? STATION_MODES[0];
-        this._modeItem.visible = scene.id === 'station';
+        this._modeItem.visible = scene.renderer === 'station';
         this._modeItem.setSensitive(enabled);
         this._modeItem.label.text = `Режим: ${mode.name}`;
         for (const {id, item} of this._modeChoices)
@@ -188,13 +208,14 @@ export default class NightfallExtension extends Extension {
 
         this._loading = true;
         this._syncMenu();
-        const scene = getScene(this._settings.get_string('selected-scene'));
+        const scene = this._selectedScene();
         let candidate = null;
         try {
-            const image = Gio.File.new_for_path(`${this.path}/${scene.image}`);
+            if (!scene) throw new Error('The local scene library is empty');
+            const image = Gio.File.new_for_path(`${scene.root}/${scene.image}`);
             if (!image.query_exists(null))
                 throw new Error(`Missing scene image: ${scene.image}`);
-            candidate = await createRenderer(scene.id, this.path);
+            candidate = await createRenderer(scene.id, scene.root, scene);
             // An earlier import may finish after another selection or disable.
             if (!this._enabled || generation !== this._loadGeneration) {
                 candidate.destroy();
@@ -204,7 +225,7 @@ export default class NightfallExtension extends Extension {
             candidate = null;
             this._scene = scene;
             this._imageUri = image.get_uri();
-            if (scene.id === 'station')
+            if (scene.renderer === 'station')
                 this._renderer.setMode(this._settings.get_string('station-mode'), true);
             this._renderer.update(0, NEUTRAL_POINTER, this._weather);
             this._loading = false;
@@ -218,7 +239,7 @@ export default class NightfallExtension extends Extension {
             this._destroyActors();
             this._destroyRenderer();
             this._reportRenderError(error);
-            Main.notifyError('Nightfall', `Не удалось открыть «${scene.name}». Можно выбрать другую сцену в меню.`);
+            Main.notifyError('Nightfall', `Не удалось открыть «${scene?.name ?? 'сцену'}». Можно выбрать другую сцену в меню.`);
         }
     }
 
@@ -342,6 +363,8 @@ export default class NightfallExtension extends Extension {
         this._indicator?.destroy();
         this._indicator = null;
         this._sceneItems = null;
+        this._sceneSection = null;
+        this._scenes = null;
         this._weatherChoices = null;
         this._modeChoices = null;
         this._modeItem = null;

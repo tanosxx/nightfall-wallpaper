@@ -90,13 +90,22 @@ fi
 install_files="$bundle_dir/install-files"
 python3 "$wallpaper_dir/scripts/verify-bundle.py" "$bundle_path" --extract-install-files "$install_files"
 
+# Migrate the previous complete collection before replacing its extension.
+# The helper validates data and commits its registry atomically; a failure
+# stops the upgrade while the previous extension is still installed.
+nightfall_data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"
+previous_extension="$nightfall_data_dir/gnome-shell/extensions/$extension_uuid"
+if [[ -f "$install_files/scene-manager.py" && -d "$previous_extension/assets" ]]; then
+    printf '%s\n' 'Сохраняем установленные сцены в локальную библиотеку…'
+    python3 "$install_files/scene-manager.py" import-bundled "$previous_extension"
+fi
+
 # Only this extension is touched. Background picture settings are never changed.
 # GNOME caches JavaScript modules, so updates can require a new login as well.
 if gnome-extensions info "$extension_uuid" >/dev/null 2>&1; then
     gnome-extensions disable "$extension_uuid" || true
 fi
 gnome-extensions install --force "$bundle_path"
-nightfall_data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"
 install -D -m 644 "$install_files/app/nightfall-wallpaper.desktop" "$nightfall_data_dir/applications/nightfall-wallpaper.desktop"
 install -D -m 644 "$install_files/app/nightfall-wallpaper.svg" "$nightfall_data_dir/icons/hicolor/scalable/apps/nightfall-wallpaper.svg"
 if command -v update-desktop-database >/dev/null 2>&1; then

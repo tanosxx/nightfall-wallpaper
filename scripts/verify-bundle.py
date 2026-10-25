@@ -21,9 +21,9 @@ REQUIRED = set(INSTALL_FILES) | {
     'schemas/org.gnome.shell.extensions.nightfall.gschema.xml', 'schemas/gschemas.compiled',
     'native-renderer.js', 'polar-renderer.js', 'station-renderer.js', 'abyss-renderer.js',
     'junction-renderer.js', 'cloudcity-renderer.js', 'titans-renderer.js',
-    'assets/city.png', 'assets/polar.png', 'assets/station.png', 'assets/abyss.png',
-    'assets/junction.png', 'assets/cloudcity.png', 'assets/titans.png',
+    'assets/city.png',
 }
+PACK_MANAGER_FILES = {'installed-scenes.js', 'scene-manager.py', 'scene-manager-client.js'}
 
 
 def safe_name(name):
@@ -87,6 +87,13 @@ def verify_bundle(path, extract_install_files=None):
             raise ValueError('Metadata is not a GNOME 50 Nightfall release')
         if type(manifest.get('version')) is not int or manifest.get('version') != version or manifest.get('scenes') != SCENES:
             raise ValueError('Manifest version or scene catalogue disagrees with Nightfall')
+        install_files = INSTALL_FILES
+        if version >= 16:
+            if not PACK_MANAGER_FILES <= files or manifest.get('bundledScenes') != ['nightfall']:
+                raise ValueError('Incomplete catalogue-enabled Nightfall bundle')
+            install_files = INSTALL_FILES + ('scene-manager.py',)
+        elif not {f'assets/{name}.png' for name in SCENES[1:]} <= files:
+            raise ValueError('Legacy bundle is missing scene photographs')
         hashes = manifest.get('files')
         if not isinstance(hashes, dict) or set(hashes) != files - {'bundle-manifest.json'}:
             raise ValueError('Manifest must list every file exactly once')
@@ -106,7 +113,7 @@ def verify_bundle(path, extract_install_files=None):
             destination = Path(extract_install_files)
             destination.mkdir(mode=0o700, parents=False, exist_ok=False)
             (destination / 'app').mkdir(mode=0o700)
-            for name in INSTALL_FILES:
+            for name in install_files:
                 with (destination / name).open('xb') as output:
                     output.write(archive.read(name))
         return {'uuid': UUID, 'version': version, 'scenes': SCENES, 'files': len(files), 'uncompressedBytes': total}

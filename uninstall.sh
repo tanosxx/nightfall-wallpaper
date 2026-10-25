@@ -39,6 +39,7 @@ PY
         gtk-update-icon-cache -q -t -f "$nightfall_data_dir/icons/hicolor" >/dev/null 2>&1 || true
     fi
     printf '%s\n' 'Nightfall удалён. Снова отображаются ваши прежние обои.'
+    printf '%s\n' 'Скачанные сцены сохранены в локальной библиотеке для повторной установки Nightfall.'
 else
     printf '%s\n' 'Не удалось удалить расширение. Проверьте, что оно установлено и команда запущена из вашего сеанса GNOME.' >&2
     exit 1

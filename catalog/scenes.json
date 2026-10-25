@@ -1,0 +1,77 @@
+{
+  "formatVersion": 1,
+  "scenes": {
+    "nightfall": {
+      "assets": [
+        "assets/city.png"
+      ],
+      "version": 1,
+      "author": "tanosxx",
+      "license": "GPL-3.0-only",
+      "preview": "catalog/previews/nightfall.png"
+    },
+    "polar": {
+      "assets": [
+        "assets/polar.png"
+      ],
+      "version": 1,
+      "author": "tanosxx",
+      "license": "GPL-3.0-only",
+      "preview": "catalog/previews/polar.png"
+    },
+    "station": {
+      "assets": [
+        "assets/station.png",
+        "assets/station-native",
+        "assets/station-relief"
+      ],
+      "version": 1,
+      "author": "tanosxx",
+      "license": "GPL-3.0-only",
+      "preview": "catalog/previews/station.png"
+    },
+    "abyss": {
+      "assets": [
+        "assets/abyss.png",
+        "assets/abyss-native"
+      ],
+      "version": 1,
+      "author": "tanosxx",
+      "license": "GPL-3.0-only",
+      "preview": "catalog/previews/abyss.png"
+    },
+    "junction": {
+      "assets": [
+        "assets/junction.png",
+        "assets/junction-native"
+      ],
+      "version": 1,
+      "author": "tanosxx",
+      "license": "GPL-3.0-only",
+      "preview": "catalog/previews/junction.png"
+    },
+    "cloudcity": {
+      "assets": [
+        "assets/cloudcity.png",
+        "assets/cloudcity-native"
+      ],
+      "version": 1,
+      "author": "tanosxx",
+      "license": "GPL-3.0-only",
+      "preview": "catalog/previews/cloudcity.png"
+    },
+    "titans": {
+      "assets": [
+        "assets/titans.png",
+        "assets/titans"
+      ],
+      "exclude": [
+        "assets/titans/planet-mushroom-atlas.png"
+      ],
+      "version": 1,
+      "author": "tanosxx",
+      "license": "GPL-3.0-only",
+      "preview": "catalog/previews/titans.png"
+    }
+  }
+}

@@ -28,16 +28,18 @@ jobs:
       - name: Install headless build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install --no-install-recommends -y gjs libglib2.0-bin python3
+          sudo apt-get install --no-install-recommends -y gjs libglib2.0-bin python3 gir1.2-gtk-4.0 gir1.2-adw-1 xvfb xauth
       - name: Check source and bundle validation
         run: bash scripts/check-source.sh
+      - name: Check native catalogue interface
+        run: xvfb-run -a gjs -m tests/prefs-catalog.test.js
       - name: Build the extension ZIP
         run: >-
           python3 package-extension.py
           --stage "$RUNNER_TEMP/nightfall@local"
           --archive dist/nightfall@local.shell-extension.zip
       - name: Exercise all seven packaged native renderers
-        run: gjs -m tests/desktop-bundle.test.js "$RUNNER_TEMP/nightfall@local"
+        run: python3 scripts/check-packaged-scenes.py "$RUNNER_TEMP/nightfall@local"
       - name: Build installer archive and checksums
         run: >-
           python3 scripts/package-release.py
@@ -49,6 +51,8 @@ jobs:
             dist/*.zip
             dist/*.tar.gz
             dist/SHA256SUMS
+            dist/scenes/*.zip
+            dist/catalog/index.json
           if-no-files-found: error
           compression-level: 0
           retention-days: 14

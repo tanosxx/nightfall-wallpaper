@@ -39,7 +39,7 @@ export const SCENES = Object.freeze([
 ].map(scene => Object.freeze({...scene, width: 1672, height: 941})));
 
 export function intensityLabels(scene) {
-    if (scene.control === 'activity') return scene.id === 'station'
+    if (scene.control === 'activity') return (scene.renderer ?? scene.id) === 'station'
         ? ['Перерыв', 'Спокойная', 'Активная'] : ['Тихо', 'Умеренно', 'Активно'];
     if (scene.control === 'flow') return ['Минимальная', 'Слабая', 'Обычная'];
     return ['Без осадков', 'Слабые', 'Обычные'];
