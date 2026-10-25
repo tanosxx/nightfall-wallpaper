@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop stop-color="#182a48"/>
+      <stop offset="1" stop-color="#081726"/>
+    </linearGradient>
+    <linearGradient id="aurora" x1="0" x2="1" y2="1">
+      <stop stop-color="#a6f5e4"/>
+      <stop offset=".55" stop-color="#5ed1dc"/>
+      <stop offset="1" stop-color="#858bff"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="112" height="112" rx="27" fill="url(#sky)"/>
+  <path d="M18 63C37 24 49 52 65 34S96 27 111 22V38C93 40 84 37 69 50S42 41 18 79Z" fill="url(#aurora)" opacity=".76"/>
+  <circle cx="94" cy="31" r="8" fill="#ecf6ff"/>
+  <circle cx="99" cy="27" r="8" fill="#192b49"/>
+  <path d="M13 101 32 82 44 91 61 68 82 95 95 84 116 102V112H13Z" fill="#193d4c"/>
+  <path d="M22 108V82H35V71H46V108M53 108V88H67V79H78V108M86 108V73H98V66H105V108" fill="#091724"/>
+  <g fill="#f9c374">
+    <path d="M28 88h3v5h-3zM39 81h3v5h-3zM39 93h3v5h-3zM59 94h3v5h-3zM71 86h3v5h-3zM92 83h3v5h-3zM99 75h3v5h-3z"/>
+  </g>
+  <path d="M22 112H106" stroke="#6acedd" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+</svg>

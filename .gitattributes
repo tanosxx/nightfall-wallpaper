@@ -1,0 +1,2 @@
+# Preserve upstream formatting in third-party source files.
+vendor/** -whitespace

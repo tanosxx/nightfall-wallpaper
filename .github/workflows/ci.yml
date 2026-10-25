@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Install headless build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y gjs libglib2.0-bin python3
+      - name: Check source and bundle validation
+        run: bash scripts/check-source.sh
+      - name: Build the extension ZIP
+        run: >-
+          python3 package-extension.py
+          --stage "$RUNNER_TEMP/nightfall@local"
+          --archive dist/nightfall@local.shell-extension.zip
+      - name: Exercise all seven packaged native renderers
+        run: gjs -m tests/desktop-bundle.test.js "$RUNNER_TEMP/nightfall@local"
+      - name: Build installer archive and checksums
+        run: >-
+          python3 scripts/package-release.py
+          --bundle dist/nightfall@local.shell-extension.zip --output dist
+      - uses: actions/upload-artifact@v7
+        with:
+          name: nightfall-${{ github.sha }}
+          path: |
+            dist/*.zip
+            dist/*.tar.gz
+            dist/SHA256SUMS
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14

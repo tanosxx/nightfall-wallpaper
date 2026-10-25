@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark">
+  <title>Город над облаками · живые обои</title><link rel="icon" href="data:,"><link rel="stylesheet" href="preview.css">
+  <style>.city{background-image:url(assets/cloudcity.png);background-size:contain}</style>
+</head>
+<body>
+  <script>if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('embedded');</script>
+  <main aria-label="Город над облаками: движение облачного океана, вращающиеся турбины, огни башен и далёкая гроза">
+    <div class="city" aria-hidden="true"></div><canvas id="atmosphere" aria-hidden="true"></canvas><div class="shade" aria-hidden="true"></div>
+  </main>
+  <aside id="controls" aria-label="Управление предпросмотром">
+    <div class="caption"><span class="eyebrow">ЖИВЫЕ ОБОИ / ТАМ, ГДЕ КОНЧАЕТСЯ ЗЕМЛЯ</span><h1>Город над облаками<span>06</span></h1><p>Над облачным океаном слышен только ветер.</p></div>
+    <div class="actions">
+      <button id="play" aria-label="Приостановить анимацию"><span id="playIcon">Ⅱ</span><span id="playText">Пауза</span></button>
+      <label class="rain-label" for="rain">Ветер<input id="rain" type="range" min="0" max="100" value="65" aria-label="Сила ветра"></label>
+      <button id="fullscreen" aria-label="Полный экран"><span>⛶</span><span>Во весь экран</span></button>
+    </div><div class="hint">пробел — пауза · F — полный экран · H — скрыть панель</div>
+  </aside>
+  <div id="error" role="alert" hidden>Не удалось загрузить сцену. Откройте её из полной папки обоев.</div>
+  <script src="cloudcity-atmosphere.js?v=right-facades-20261025"></script><script src="cloudcity-lights.js"></script><script src="cloudcity-turbines.js"></script><script src="cloudcity-renderer.js"></script><script src="cloudcity-scene.js?v=right-facades-20261025"></script>
+</body>
+</html>

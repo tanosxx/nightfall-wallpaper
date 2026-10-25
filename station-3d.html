@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>Дальний рубеж — объёмная станция</title><link rel="icon" href="data:,"><link rel="stylesheet" href="station-3d.css"></head>
+<body>
+<script>
+if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('embedded');
+window.stationInitialSettings=null;
+window.addEventListener('message',e=>{if(e.source===parent&&e.origin===location.origin&&e.data?.type==='nightfall:settings')window.stationInitialSettings=e.data;});
+</script>
+<main aria-label="Объёмная космическая станция с неподвижной камерой"><canvas id="space" aria-hidden="true"></canvas></main>
+<div id="loading" role="status"><span class="loader-mark">◌</span><span>Дальний рубеж<small>Подготовка станции</small></span></div>
+<div id="error" role="alert" hidden></div>
+<aside id="controls" aria-label="Управление сценой"><span class="eyebrow">ДАЛЬНИЙ РУБЕЖ / 03</span><p>Жизнь между звёздами.</p><div class="controls-line"><div id="modes" role="group" aria-label="Режим станции"><button data-mode="shift" aria-pressed="true">Рабочая смена</button><button data-mode="night" aria-pressed="false">Ночной режим</button><button data-mode="service" aria-pressed="false">Техобслуживание</button></div><button id="play">Пауза</button><label>Работа ангара<input id="activity" type="range" min="0" max="100" value="100"></label><button id="full">Во весь экран</button></div><small>Пробел — пауза · H — скрыть управление</small></aside>
+<script type="module" src="station-3d.js"></script>
+</body></html>

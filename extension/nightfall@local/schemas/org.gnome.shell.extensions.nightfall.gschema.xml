@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.nightfall" path="/org/gnome/shell/extensions/nightfall/">
+    <key name="selected-scene" type="s">
+      <choices><choice value="nightfall"/><choice value="polar"/><choice value="station"/><choice value="abyss"/><choice value="junction"/><choice value="cloudcity"/><choice value="titans"/></choices>
+      <default>'nightfall'</default>
+      <summary>Selected wallpaper scene</summary>
+    </key>
+    <key name="paused" type="b">
+      <default>false</default>
+      <summary>Pause scene animation</summary>
+    </key>
+    <key name="station-mode" type="s">
+      <choices><choice value="shift"/><choice value="night"/><choice value="service"/></choices>
+      <default>'shift'</default>
+      <summary>Lighting mode for the distant station</summary>
+    </key>
+    <key name="weather" type="d">
+      <range min="0.0" max="1.0"/>
+      <default>1.0</default>
+      <summary>Rain, snow, current, wind or station activity for the selected scene</summary>
+    </key>
+    <key name="background-enabled" type="b">
+      <default>true</default>
+      <summary>Show animated wallpaper while keeping the panel menu available</summary>
+    </key>
+  </schema>
+</schemalist>

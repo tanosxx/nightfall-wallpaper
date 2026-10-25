@@ -1,0 +1,746 @@
+{
+  "emitters": [
+    {
+      "kind": "windows",
+      "index": 0,
+      "x": 745,
+      "y": 274,
+      "w": 15,
+      "h": 21,
+      "file": "light-00.png"
+    },
+    {
+      "kind": "windows",
+      "index": 1,
+      "x": 762,
+      "y": 274,
+      "w": 13,
+      "h": 21,
+      "file": "light-01.png"
+    },
+    {
+      "kind": "windows",
+      "index": 2,
+      "x": 777,
+      "y": 272,
+      "w": 11,
+      "h": 23,
+      "file": "light-02.png"
+    },
+    {
+      "kind": "windows",
+      "index": 3,
+      "x": 790,
+      "y": 271,
+      "w": 11,
+      "h": 23,
+      "file": "light-03.png"
+    },
+    {
+      "kind": "windows",
+      "index": 4,
+      "x": 803,
+      "y": 270,
+      "w": 9,
+      "h": 22,
+      "file": "light-04.png"
+    },
+    {
+      "kind": "windows",
+      "index": 5,
+      "x": 687,
+      "y": 270,
+      "w": 21,
+      "h": 24,
+      "file": "light-05.png"
+    },
+    {
+      "kind": "windows",
+      "index": 6,
+      "x": 657,
+      "y": 305,
+      "w": 11,
+      "h": 10,
+      "file": "light-06.png"
+    },
+    {
+      "kind": "windows",
+      "index": 7,
+      "x": 742,
+      "y": 336,
+      "w": 18,
+      "h": 20,
+      "file": "light-07.png"
+    },
+    {
+      "kind": "windows",
+      "index": 8,
+      "x": 746,
+      "y": 356,
+      "w": 14,
+      "h": 19,
+      "file": "light-08.png"
+    },
+    {
+      "kind": "windows",
+      "index": 9,
+      "x": 472,
+      "y": 351,
+      "w": 7,
+      "h": 23,
+      "file": "light-09.png"
+    },
+    {
+      "kind": "windows",
+      "index": 10,
+      "x": 481,
+      "y": 355,
+      "w": 8,
+      "h": 24,
+      "file": "light-10.png"
+    },
+    {
+      "kind": "windows",
+      "index": 11,
+      "x": 497,
+      "y": 355,
+      "w": 17,
+      "h": 26,
+      "file": "light-11.png"
+    },
+    {
+      "kind": "windows",
+      "index": 12,
+      "x": 516,
+      "y": 356,
+      "w": 17,
+      "h": 25,
+      "file": "light-12.png"
+    },
+    {
+      "kind": "windows",
+      "index": 13,
+      "x": 533,
+      "y": 399,
+      "w": 15,
+      "h": 18,
+      "file": "light-13.png"
+    },
+    {
+      "kind": "windows",
+      "index": 14,
+      "x": 533,
+      "y": 416,
+      "w": 15,
+      "h": 25,
+      "file": "light-14.png"
+    },
+    {
+      "kind": "windows",
+      "index": 15,
+      "x": 505,
+      "y": 423,
+      "w": 11,
+      "h": 15,
+      "file": "light-15.png"
+    },
+    {
+      "kind": "windows",
+      "index": 16,
+      "x": 844,
+      "y": 446,
+      "w": 8,
+      "h": 13,
+      "file": "light-16.png"
+    },
+    {
+      "kind": "windows",
+      "index": 17,
+      "x": 852,
+      "y": 448,
+      "w": 10,
+      "h": 16,
+      "file": "light-17.png"
+    },
+    {
+      "kind": "windows",
+      "index": 18,
+      "x": 990,
+      "y": 460,
+      "w": 22,
+      "h": 24,
+      "file": "light-18.png"
+    },
+    {
+      "kind": "windows",
+      "index": 19,
+      "x": 989,
+      "y": 489,
+      "w": 23,
+      "h": 25,
+      "file": "light-19.png"
+    },
+    {
+      "kind": "windows",
+      "index": 20,
+      "x": 989,
+      "y": 520,
+      "w": 23,
+      "h": 26,
+      "file": "light-20.png"
+    },
+    {
+      "kind": "windows",
+      "index": 21,
+      "x": 989,
+      "y": 555,
+      "w": 17,
+      "h": 26,
+      "file": "light-21.png"
+    },
+    {
+      "kind": "windows",
+      "index": 22,
+      "x": 988,
+      "y": 591,
+      "w": 25,
+      "h": 37,
+      "file": "light-22.png"
+    },
+    {
+      "kind": "windows",
+      "index": 23,
+      "x": 988,
+      "y": 685,
+      "w": 17,
+      "h": 22,
+      "file": "light-23.png"
+    },
+    {
+      "kind": "windows",
+      "index": 24,
+      "x": 987,
+      "y": 729,
+      "w": 18,
+      "h": 26,
+      "file": "light-24.png"
+    },
+    {
+      "kind": "windows",
+      "index": 25,
+      "x": 1610,
+      "y": 0,
+      "w": 19,
+      "h": 22,
+      "file": "light-25.png"
+    },
+    {
+      "kind": "windows",
+      "index": 26,
+      "x": 1608,
+      "y": 29,
+      "w": 20,
+      "h": 26,
+      "file": "light-26.png"
+    },
+    {
+      "kind": "windows",
+      "index": 27,
+      "x": 1601,
+      "y": 74,
+      "w": 26,
+      "h": 24,
+      "file": "light-27.png"
+    },
+    {
+      "kind": "windows",
+      "index": 28,
+      "x": 1606,
+      "y": 99,
+      "w": 19,
+      "h": 16,
+      "file": "light-28.png"
+    },
+    {
+      "kind": "windows",
+      "index": 29,
+      "x": 1602,
+      "y": 198,
+      "w": 19,
+      "h": 25,
+      "file": "light-29.png"
+    },
+    {
+      "kind": "windows",
+      "index": 30,
+      "x": 1602,
+      "y": 227,
+      "w": 18,
+      "h": 26,
+      "file": "light-30.png"
+    },
+    {
+      "kind": "windows",
+      "index": 31,
+      "x": 1599,
+      "y": 254,
+      "w": 20,
+      "h": 31,
+      "file": "light-31.png"
+    },
+    {
+      "kind": "windows",
+      "index": 32,
+      "x": 1597,
+      "y": 329,
+      "w": 19,
+      "h": 23,
+      "file": "light-32.png"
+    },
+    {
+      "kind": "windows",
+      "index": 33,
+      "x": 1595,
+      "y": 353,
+      "w": 20,
+      "h": 25,
+      "file": "light-33.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 0,
+      "x": 303,
+      "y": 403,
+      "w": 273,
+      "h": 178,
+      "file": "light-34.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 0,
+      "x": 476,
+      "y": 393,
+      "w": 19,
+      "h": 14,
+      "file": "light-35.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 1,
+      "x": 850,
+      "y": 441,
+      "w": 163,
+      "h": 216,
+      "file": "light-36.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 1,
+      "x": 925,
+      "y": 430,
+      "w": 27,
+      "h": 16,
+      "file": "light-37.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 2,
+      "x": 621,
+      "y": 595,
+      "w": 241,
+      "h": 125,
+      "file": "light-38.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 2,
+      "x": 766,
+      "y": 584,
+      "w": 21,
+      "h": 16,
+      "file": "light-39.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 3,
+      "x": 826,
+      "y": 680,
+      "w": 196,
+      "h": 175,
+      "file": "light-40.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 3,
+      "x": 922,
+      "y": 668,
+      "w": 29,
+      "h": 18,
+      "file": "light-41.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 4,
+      "x": 1176,
+      "y": 561,
+      "w": 259,
+      "h": 183,
+      "file": "light-42.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 4,
+      "x": 1313,
+      "y": 547,
+      "w": 33,
+      "h": 22,
+      "file": "light-43.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 5,
+      "x": 1361,
+      "y": 151,
+      "w": 175,
+      "h": 107,
+      "file": "light-44.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 5,
+      "x": 1460,
+      "y": 142,
+      "w": 22,
+      "h": 13,
+      "file": "light-45.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 6,
+      "x": 1460,
+      "y": 147,
+      "w": 134,
+      "h": 154,
+      "file": "light-46.png"
+    },
+    {
+      "kind": "worklamps",
+      "index": 6,
+      "x": 1514,
+      "y": 138,
+      "w": 26,
+      "h": 13,
+      "file": "light-47.png"
+    },
+    {
+      "kind": "amber",
+      "index": 0,
+      "x": 845,
+      "y": 388,
+      "w": 23,
+      "h": 23,
+      "file": "light-48.png"
+    },
+    {
+      "kind": "amber",
+      "index": 1,
+      "x": 844,
+      "y": 508,
+      "w": 25,
+      "h": 25,
+      "file": "light-49.png"
+    },
+    {
+      "kind": "amber",
+      "index": 2,
+      "x": 961,
+      "y": 413,
+      "w": 13,
+      "h": 13,
+      "file": "light-50.png"
+    },
+    {
+      "kind": "amber",
+      "index": 3,
+      "x": 1074,
+      "y": 358,
+      "w": 15,
+      "h": 15,
+      "file": "light-51.png"
+    },
+    {
+      "kind": "amber",
+      "index": 4,
+      "x": 1223,
+      "y": 387,
+      "w": 27,
+      "h": 27,
+      "file": "light-52.png"
+    },
+    {
+      "kind": "amber",
+      "index": 5,
+      "x": 1330,
+      "y": 478,
+      "w": 27,
+      "h": 27,
+      "file": "light-53.png"
+    },
+    {
+      "kind": "amber",
+      "index": 6,
+      "x": 1377,
+      "y": 487,
+      "w": 25,
+      "h": 25,
+      "file": "light-54.png"
+    },
+    {
+      "kind": "amber",
+      "index": 7,
+      "x": 1274,
+      "y": 436,
+      "w": 17,
+      "h": 17,
+      "file": "light-55.png"
+    },
+    {
+      "kind": "amber",
+      "index": 8,
+      "x": 1087,
+      "y": 467,
+      "w": 25,
+      "h": 25,
+      "file": "light-56.png"
+    },
+    {
+      "kind": "amber",
+      "index": 8,
+      "x": 1032,
+      "y": 481,
+      "w": 130,
+      "h": 95,
+      "file": "light-57.png"
+    },
+    {
+      "kind": "amber",
+      "index": 9,
+      "x": 868,
+      "y": 611,
+      "w": 21,
+      "h": 21,
+      "file": "light-58.png"
+    },
+    {
+      "kind": "amber",
+      "index": 10,
+      "x": 500,
+      "y": 484,
+      "w": 15,
+      "h": 15,
+      "file": "light-59.png"
+    },
+    {
+      "kind": "amber",
+      "index": 11,
+      "x": 501,
+      "y": 424,
+      "w": 15,
+      "h": 15,
+      "file": "light-60.png"
+    },
+    {
+      "kind": "amber",
+      "index": 12,
+      "x": 786,
+      "y": 465,
+      "w": 13,
+      "h": 13,
+      "file": "light-61.png"
+    },
+    {
+      "kind": "amber",
+      "index": 13,
+      "x": 1092,
+      "y": 107,
+      "w": 13,
+      "h": 13,
+      "file": "light-62.png"
+    },
+    {
+      "kind": "amber",
+      "index": 14,
+      "x": 1121,
+      "y": 151,
+      "w": 11,
+      "h": 11,
+      "file": "light-63.png"
+    },
+    {
+      "kind": "amber",
+      "index": 15,
+      "x": 1116,
+      "y": 165,
+      "w": 11,
+      "h": 11,
+      "file": "light-64.png"
+    },
+    {
+      "kind": "amber",
+      "index": 16,
+      "x": 1219,
+      "y": 165,
+      "w": 11,
+      "h": 11,
+      "file": "light-65.png"
+    },
+    {
+      "kind": "amber",
+      "index": 17,
+      "x": 1480,
+      "y": 119,
+      "w": 13,
+      "h": 13,
+      "file": "light-66.png"
+    },
+    {
+      "kind": "amber",
+      "index": 18,
+      "x": 1519,
+      "y": 117,
+      "w": 15,
+      "h": 15,
+      "file": "light-67.png"
+    },
+    {
+      "kind": "amber",
+      "index": 19,
+      "x": 1515,
+      "y": 517,
+      "w": 23,
+      "h": 23,
+      "file": "light-68.png"
+    },
+    {
+      "kind": "amber",
+      "index": 19,
+      "x": 1499,
+      "y": 530,
+      "w": 52,
+      "h": 37,
+      "file": "light-69.png"
+    },
+    {
+      "kind": "amber",
+      "index": 20,
+      "x": 1570,
+      "y": 399,
+      "w": 21,
+      "h": 21,
+      "file": "light-70.png"
+    },
+    {
+      "kind": "amber",
+      "index": 20,
+      "x": 1553,
+      "y": 411,
+      "w": 56,
+      "h": 36,
+      "file": "light-71.png"
+    },
+    {
+      "kind": "amber",
+      "index": 21,
+      "x": 1053,
+      "y": 564,
+      "w": 23,
+      "h": 23,
+      "file": "light-72.png"
+    },
+    {
+      "kind": "amber",
+      "index": 21,
+      "x": 1038,
+      "y": 577,
+      "w": 50,
+      "h": 38,
+      "file": "light-73.png"
+    },
+    {
+      "kind": "amber",
+      "index": 22,
+      "x": 931,
+      "y": 415,
+      "w": 15,
+      "h": 15,
+      "file": "light-74.png"
+    },
+    {
+      "kind": "amber",
+      "index": 23,
+      "x": 1352,
+      "y": 378,
+      "w": 19,
+      "h": 19,
+      "file": "light-75.png"
+    },
+    {
+      "kind": "amber",
+      "index": 24,
+      "x": 534,
+      "y": 350,
+      "w": 13,
+      "h": 13,
+      "file": "light-76.png"
+    },
+    {
+      "kind": "beacons",
+      "index": 0,
+      "x": 1004,
+      "y": 43,
+      "w": 19,
+      "h": 19,
+      "file": "light-77.png"
+    },
+    {
+      "kind": "beacons",
+      "index": 1,
+      "x": 1201,
+      "y": 78,
+      "w": 19,
+      "h": 19,
+      "file": "light-78.png"
+    },
+    {
+      "kind": "beacons",
+      "index": 2,
+      "x": 745,
+      "y": 221,
+      "w": 19,
+      "h": 19,
+      "file": "light-79.png"
+    },
+    {
+      "kind": "beacons",
+      "index": 3,
+      "x": 531,
+      "y": 306,
+      "w": 19,
+      "h": 19,
+      "file": "light-80.png"
+    },
+    {
+      "kind": "beacons",
+      "index": 4,
+      "x": 575,
+      "y": 309,
+      "w": 19,
+      "h": 19,
+      "file": "light-81.png"
+    }
+  ],
+  "reconstructionMaxError": 0,
+  "source": "assets/abyss.png",
+  "width": 1672,
+  "height": 941
+}

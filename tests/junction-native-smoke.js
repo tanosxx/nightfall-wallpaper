@@ -1,0 +1,31 @@
+import Cairo from 'cairo';
+import GLib from 'gi://GLib';
+import {createJunctionRenderer,carGeometry} from '../extension/nightfall@local/junction-renderer.js';
+import {Motion,Traffic,Atmosphere} from '../extension/nightfall@local/junction-models.js';
+const root=GLib.get_current_dir(),assert=(condition,message)=>{if(!condition)throw new Error(message);};
+const t0=GLib.get_monotonic_time();
+const r=createJunctionRenderer(root+'/extension/nightfall@local/assets/junction.png');
+const loadMs=(GLib.get_monotonic_time()-t0)/1000;
+const surface=new Cairo.ImageSurface(Cairo.Format.ARGB32,1672,941),cr=new Cairo.Context(surface);
+r.update(0,{x:9,y:999},1);r.paint(cr,1672,941);surface.writeToPNG(root+'/junction-native-preview-0.png');
+const checksum=path=>GLib.compute_checksum_for_bytes(GLib.ChecksumType.SHA256,new GLib.Bytes(GLib.file_get_contents(path)[1]));
+const before=JSON.stringify(r.getDiagnostics());r.update(0,{x:-900,y:0},1);assert(JSON.stringify(r.getDiagnostics())===before,'update(0)/pointer must not advance time or change scene');
+r.paint(cr,1672,941);surface.writeToPNG('/tmp/junction-native-paused.png');assert(checksum(root+'/junction-native-preview-0.png')===checksum('/tmp/junction-native-paused.png'),'Paused pixels stay identical');
+r.update(NaN,{},0);assert(r.time===0&&r.weather===0,'Invalid delta and dry weather');
+r.paint(cr,1672,941);surface.writeToPNG('/tmp/junction-native-dry.png');assert(checksum('/tmp/junction-native-dry.png')!==checksum('/tmp/junction-native-paused.png'),'Weather zero removes rain at the same scene time');
+r.update(-5,{},7);assert(r.time===0&&r.weather===1,'Clamp negative delta/weather');
+for(let i=0;i<360;i++)r.update(.1,{},1);
+assert(Math.abs(r.time-36)<1e-8,'Advancing clock');
+assert(r.state.trains.find(t=>t.id==='upper').active,'Distant train active at 36 seconds');
+r.paint(cr,1672,941);surface.writeToPNG(root+'/junction-native-preview-36.png');
+const durations=[];for(let i=0;i<8;i++){r.update(.04,{},.6);const start=GLib.get_monotonic_time();r.paint(cr,1672,941);durations.push((GLib.get_monotonic_time()-start)/1000);}
+// Cropped monitor projections use the same cover transform as the photograph.
+const narrow=new Cairo.ImageSurface(Cairo.Format.ARGB32,480,800),nc=new Cairo.Context(narrow);r.paint(nc,480,800);nc.$dispose();narrow.finish();
+const first=GLib.compute_checksum_for_bytes(GLib.ChecksumType.SHA256,new GLib.Bytes(GLib.file_get_contents(root+'/junction-native-preview-0.png')[1])),last=GLib.compute_checksum_for_bytes(GLib.ChecksumType.SHA256,new GLib.Bytes(GLib.file_get_contents(root+'/junction-native-preview-36.png')[1]));
+assert(first!==last,'Scene must visibly animate');assert(r.windows.length>250,'City-wide photographed apartment windows');
+assert(r.getDiagnostics().visibleTracks.join(',')==='upper','No foreground train');
+const lower=Array.from({length:150},(_,i)=>Traffic.sample(i)).flat().filter(c=>c.visible&&c.y>900);assert(lower.length>20,'Bottom traffic remains visible');assert(new Set(lower.map(c=>c.direction)).size===2,'Bottom road uses both directions');
+const geometry=carGeometry(Motion.sample(36).trains.find(t=>t.id==='upper'),2);assert(Number.isFinite(geometry.width)&&geometry.width>0,'Train perspective');
+assert(Atmosphere.steamAt(0,0,0).x!==Atmosphere.steamAt(0,0,3).x,'Steam advects');
+const diagnostics=r.getDiagnostics();r.destroy();r.destroy();r.update(.1);r.paint(cr,1672,941);assert(r.glows.size===0&&r.windows.length===0,'Destroy releases resources and is idempotent');cr.$dispose();surface.finish();
+print(JSON.stringify({pass:true,loadMs,paintMs:durations,diagnostics}));

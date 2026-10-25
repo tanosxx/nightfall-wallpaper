@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Проверка непрерывного течения облаков</title>
+<style>
+  *{box-sizing:border-box}body{margin:18px;background:#0d1721;color:#e2eaf0;font:14px system-ui}
+  h1{font-size:21px;margin:0 0 12px}p{max-width:1050px;line-height:1.5}
+  #status{font-size:17px;font-weight:600}#status[data-result=PASS]{color:#7cddad}#status[data-result=FAIL]{color:#ff9393}
+  figure{margin:20px 0}figcaption{margin-bottom:8px}canvas,.photo-reference{display:block;width:100%;height:auto;border:1px solid #426074}
+  .early-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:1040px}.early-comparison figure{margin:12px 0}
+  details{margin-top:22px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
+</style>
+<h1>Неподвижные ограждения и непрерывный поток облаков</h1>
+<p id="status" role="status">Загрузка и сравнение кадров WebGL…</p>
+<p id="counts">Проверка архитектуры, движения облачных масс и плавности между соседними кадрами.</p>
+<p>Используется настоящий WebGL-рендерер атмосферы после загрузки облачной текстуры. Время грозы зафиксировано на нуле, меняется только время ветра. Проверяются фасад, ограждение, трубы, настил и неподвижная исходная фотография облаков внизу слева. Форма центральных облаков проверяется также через 3 и 10 минут; прежние границы цикла и поздний переход через край текстуры проверяются отдельно.</p>
+<p>Первые четыре секунды: один и тот же центральный участок облаков. Пиксельная проверка измеряет заметность изменения; направление проверяется отдельно по смещению самого рисунка облаков и рисунка изменений. Окончательная оценка естественности — при просмотре движения.</p>
+<div class="early-comparison">
+  <figure><figcaption>Центральный туман · 0 с</figcaption><canvas id="early0" width="390" height="220" aria-label="Центральный туман в нулевой момент"></canvas></figure>
+  <figure><figcaption>Тот же участок · 4 с</figcaption><canvas id="early4" width="390" height="220" aria-label="Центральный туман через четыре секунды"></canvas></figure>
+</div>
+<figure><figcaption>Исходное состояние потока · 0 с</figcaption><canvas id="frame0" width="1672" height="941" aria-label="Облака и неподвижное ограждение в нулевой момент"></canvas></figure>
+<figure><figcaption>Тот же ракурс · 12 с</figcaption><canvas id="frame12" width="1672" height="941" aria-label="Облака и неподвижное ограждение через двенадцать секунд"></canvas></figure>
+<figure><figcaption>Форма облаков после трёх минут · 180 с</figcaption><canvas id="frame180" width="1672" height="941" aria-label="Форма облаков через три минуты"></canvas></figure>
+<figure><figcaption>Форма облаков после десяти минут · 600 с</figcaption><canvas id="frame600" width="1672" height="941" aria-label="Форма облаков через десять минут"></canvas></figure>
+<figure><figcaption>Исходная фотография для сравнения внешнего вида</figcaption><img class="photo-reference" src="../assets/cloudcity.png" width="1672" height="941" alt="Исходная неподвижная фотография города над облаками"></figure>
+<details><summary>Пиксельные результаты проверки</summary><pre id="report" aria-label="Результаты проверки неподвижности и плавности">Ожидание…</pre></details>
+<script src="../cloudcity-atmosphere.js"></script>
+<script>
+(async()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),times=[0,4,9,17,24,44,180,600];
+  let phase='Загрузка текстур',renderedFrames=0;
+  // Release the browser task queue between GPU readbacks and correlation
+  // batches. A Promise.resolve() microtask would not let UI/CDP work run.
+  async function checkpoint(detail){
+    $('status').textContent=`Проверка · ${phase}`;
+    $('counts').textContent=`${detail} · прочитано кадров: ${renderedFrames}`;
+    await new Promise(resolve=>setTimeout(resolve,0));
+  }
+  const earlyPatch={name:'Центральный туман за первые четыре секунды',x:820,y:480,w:390,h:220};
+  const patches=[
+    {name:'Освещённое помещение левой башни',x:476,y:646,w:9,h:9},
+    {name:'Нижний центральный фасад',x:536,y:706,w:9,h:9},
+    {name:'Нижняя правая опора башни',x:606,y:726,w:9,h:9},
+    {name:'Фасад у границы тумана',x:616,y:753,w:9,h:9},
+    {name:'Левая стойка ограждения',x:262,y:709,w:3,h:3},
+    {name:'Стойка ограждения под башней',x:443,y:739,w:3,h:3},
+    {name:'Центральная стойка ограждения',x:830,y:759,w:3,h:3},
+    {name:'Правая стойка ограждения',x:1278,y:799,w:3,h:3},
+    {name:'Верхняя поперечина слева',x:699,y:692,w:3,h:3},
+    {name:'Верхняя поперечина справа',x:1049,y:718,w:3,h:3},
+    {name:'Средняя поперечина справа',x:1099,y:771,w:3,h:3},
+    {name:'Нижняя поперечина',x:999,y:845,w:3,h:3},
+    {name:'Труба слева на переднем плане',x:179,y:755,w:3,h:3},
+    {name:'Труба справа на переднем плане',x:1523,y:743,w:3,h:3},
+    {name:'Настил технического балкона',x:704,y:865,w:3,h:3},
+    {name:'Исходные облака слева от башни',x:172,y:560,w:130,h:65},
+    {name:'Исходные облака внизу слева',x:180,y:625,w:70,h:24},
+    {name:'Исходные облака за левым ограждением',x:330,y:685,w:70,h:24},
+    {name:'Исходные облака под левым фасадом',x:494,y:741,w:32,h:20},
+    {name:'Исходные облака над левым настилом',x:550,y:780,w:60,h:16},
+  ];
+  const clouds=[
+    {name:'Облачный океан в центре',x:850,y:500,w:230,h:140},
+    {name:'Облака за ограждением справа',x:1000,y:740,w:190,h:70},
+  ];
+  function difference(a,b){
+    let maximum=0,sum=0,changedPixels=0,perceptiblePixels=0;
+    for(let i=0;i<a.length;i+=4){let pixelMaximum=0;for(let c=0;c<3;c++){const d=Math.abs(a[i+c]-b[i+c]);maximum=Math.max(maximum,d);pixelMaximum=Math.max(pixelMaximum,d);sum+=d;}if(pixelMaximum)changedPixels++;if(pixelMaximum>=2)perceptiblePixels++;}
+    return {maximum,mean:Number((sum/(a.length/4*3)).toFixed(5)),changedPixels,perceptiblePixels,pixels:a.length/4};
+  }
+  // Constant subpixel translation is approximately linear within a texel.
+  // Compare the actual halfway frame with linear interpolation: a temporal
+  // reset produces a much larger residual than moving a sharp photo detail.
+  // Report this independently of frame delta so both cases are distinguishable.
+  function midpointResidual(a,middle,b){
+    let maximum=0,sum=0;
+    for(let i=0;i<a.length;i+=4)for(let c=0;c<3;c++){
+      const delta=Math.abs(middle[i+c]-(a[i+c]+b[i+c])*.5);
+      maximum=Math.max(maximum,delta);sum+=delta;
+    }
+    return {maximum,mean:Number((sum/(a.length/4*3)).toFixed(5))};
+  }
+  // Correlate changes rather than rendered brightness: subtracting nearby
+  // frames removes the stationary photo, which otherwise dominates matching.
+  // A horizontal translation of these patterns is evidence of advection;
+  // pixel-change magnitude alone could also be caused by brightness pulsing.
+  function temporalField(a,b,w,h){
+    const integral=new Float32Array((w+1)*(h+1)),out=new Float32Array(w*h),stride=w+1;
+    for(let y=0;y<h;y++){let row=0;for(let x=0;x<w;x++){
+      const i=(y*w+x)*4;row+=(b[i]-a[i])*.2126+(b[i+1]-a[i+1])*.7152+(b[i+2]-a[i+2])*.0722;
+      integral[(y+1)*stride+x+1]=integral[y*stride+x+1]+row;
+    }}
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+      const left=Math.max(0,x-3),right=Math.min(w,x+4),top=Math.max(0,y-3),bottom=Math.min(h,y+4);
+      out[y*w+x]=(integral[bottom*stride+right]-integral[top*stride+right]-integral[bottom*stride+left]+integral[top*stride+left])/((right-left)*(bottom-top));
+    }return out;
+  }
+  // The restored effect translates photographic cloud detail itself. Match
+  // that detail directly as well: time differences alone can favour a moving
+  // lighting overlay while the original cloud masses remain stationary.
+  function photographField(a,w,h){
+    return temporalField(new Uint8ClampedArray(a.length),a,w,h);
+  }
+  async function driftDiagnostic(a,b,w,h){
+    const bands=[[18,70],[82,134],[146,198]],results=[];
+    for(const [top,bottom] of bands){
+      await checkpoint(`Сопоставление облачных деталей · полоса ${results.length+1}/${bands.length}`);
+      function correlation(dx,dy){
+        let n=0,sa=0,sb=0,saa=0,sbb=0,sab=0;
+        for(let y=top;y<bottom;y+=2)for(let x=42;x<w-42;x+=2){
+          const p=a[y*w+x],q=b[(y+dy)*w+x+dx];n++;sa+=p;sb+=q;saa+=p*p;sbb+=q*q;sab+=p*q;
+        }return (sab-sa*sb/n)/Math.max(1e-10,Math.sqrt((saa-sa*sa/n)*(sbb-sb*sb/n)));
+      }
+      let best={dx:0,dy:0,correlation:-1};
+      for(let dy=-2;dy<=2;dy++){
+        for(let dx=-36;dx<=36;dx++){const score=correlation(dx,dy);if(score>best.correlation)best={dx,dy,correlation:score};}
+        await checkpoint(`Сопоставление облачных деталей · полоса ${results.length+1}/${bands.length} · ряд ${dy+3}/5`);
+      }
+      const stationary=correlation(0,0),round=value=>Number(value.toFixed(5));
+      results.push({sourceY:[earlyPatch.y+top,earlyPatch.y+bottom],displacementX:best.dx,displacementY:best.dy,correlation:round(best.correlation),stationaryCorrelation:round(stationary),gainOverStationary:round(best.correlation-stationary),rightwardEvidence:best.dx>2&&best.correlation>.6&&best.correlation-stationary>.01});
+    }
+    return results;
+  }
+  try{
+    const photo=new Image();photo.src='../assets/cloudcity.png';await photo.decode();
+    const renderer=window.createCloudcityAtmosphere(photo);
+    await renderer.ready;
+    await checkpoint('Текстуры загружены');
+    const diagnostics=renderer.getDiagnostics?.();
+    const seamPoint={x:950,y:590};
+    const seamSpeed=window.CLOUDCITY_ATMOSPHERE.flowAt(seamPoint.x,seamPoint.y,1).speed;
+    // At this instant x - t * speed reaches zero and the shader's fract()
+    // crosses the 3344-pixel strip boundary. Compute from the actual speed,
+    // instead of assuming a short animation cycle or rounding its time.
+    const seamTime=seamPoint.x/seamSpeed;
+    const seamPatch={name:'Непосредственно вокруг пространственного стыка',x:930,y:570,w:40,h:40};
+    const surface=Object.assign(document.createElement('canvas'),{width:photo.naturalWidth,height:photo.naturalHeight});
+    const ctx=surface.getContext('2d',{willReadFrequently:true});
+    const read=p=>ctx.getImageData(p.x,p.y,p.w,p.h).data;
+    async function frame(windTime){
+      await checkpoint(`Кадр при времени ветра ${windTime.toFixed(3)} с`);
+      renderer.render(ctx,0,windTime);
+      renderedFrames++;
+      return {windTime,architecture:patches.map(read),clouds:clouds.map(read),early:read(earlyPatch),seam:read(seamPatch)};
+    }
+    phase='Неподвижная архитектура и заметность движения';
+    const frames=[];
+    for(const windTime of times){
+      const result=await frame(windTime);
+      if([0,180,600].includes(windTime))$('frame'+windTime).getContext('2d').drawImage(surface,0,0);
+      if(windTime===0||windTime===4)$('early'+windTime).getContext('2d').drawImage(surface,earlyPatch.x,earlyPatch.y,earlyPatch.w,earlyPatch.h,0,0,earlyPatch.w,earlyPatch.h);
+      frames.push(result);
+    }
+    await frame(12);$('frame12').getContext('2d').drawImage(surface,0,0);
+    const comparisons=frames.slice(1).map(current=>({
+      windTime:current.windTime,
+      architecture:patches.map((patch,index)=>({name:patch.name,center:[patch.x+(patch.w-1)/2,patch.y+(patch.h-1)/2],...difference(frames[0].architecture[index],current.architecture[index])})),
+      clouds:clouds.map((patch,index)=>({name:patch.name,...difference(frames[0].clouds[index],current.clouds[index])})),
+    }));
+    const continuity=[];
+    for(const boundary of [10,11,22,44,seamTime]){
+      phase=`Плавность возле ${boundary.toFixed(3)} с`;
+      const before=await frame(boundary-.05),halfBefore=await frame(boundary-.025),at=await frame(boundary),halfAfter=await frame(boundary+.025),after=await frame(boundary+.05);
+      continuity.push({
+        boundary,
+        kind:boundary===seamTime?'spatial-texture-wrap':'former-cycle-boundary',
+        samples:[[before,halfBefore,at],[at,halfAfter,after]].map(([a,middle,b])=>({from:a.windTime,to:b.windTime,
+          architecture:patches.map((patch,index)=>({name:patch.name,...difference(a.architecture[index],b.architecture[index])})),
+          clouds:clouds.map((patch,index)=>({name:patch.name,...difference(a.clouds[index],b.clouds[index]),halfStepResidual:midpointResidual(a.clouds[index],middle.clouds[index],b.clouds[index])})),
+          seam:{...difference(a.seam,b.seam),halfStepResidual:midpointResidual(a.seam,middle.seam,b.seam)},
+        })),
+      });
+    }
+    const architectureUnchanged=comparisons.every(frame=>frame.architecture.every(patch=>patch.maximum===0))&&continuity.every(boundary=>boundary.samples.every(frame=>frame.architecture.every(patch=>patch.maximum===0)));
+    const earlyChange=difference(frames[0].early,frames[1].early);
+    const earlyMotionVisible=earlyChange.mean>=2&&earlyChange.perceptiblePixels/earlyChange.pixels>.25;
+    phase='Направление изменений между кадрами';
+    const temporalBefore=await frame(.75),temporalAfter=await frame(4.75);
+    const drift=await driftDiagnostic(temporalField(frames[0].early,temporalBefore.early,earlyPatch.w,earlyPatch.h),temporalField(frames[1].early,temporalAfter.early,earlyPatch.w,earlyPatch.h),earlyPatch.w,earlyPatch.h);
+    const photographicDrift=[];
+    for(const [from,to] of [[0,4],[18,22],[22,26],[40,44],[176,180],[596,600],[seamTime-2,seamTime+2]]){
+      phase=`Направление облаков · ${from.toFixed(2)} → ${to.toFixed(2)} с`;
+      const before=await frame(from),after=await frame(to);
+      photographicDrift.push({from,to,bands:await driftDiagnostic(photographField(before.early,earlyPatch.w,earlyPatch.h),photographField(after.early,earlyPatch.w,earlyPatch.h),earlyPatch.w,earlyPatch.h)});
+    }
+    phase='Итоговая проверка';await checkpoint('Подготовка результатов');
+    const cycleReset=difference(frames[0].early,frames.find(frame=>frame.windTime===44).early);
+    const cloudsMoving=comparisons.every(frame=>frame.clouds.every(patch=>patch.mean>.06&&patch.changedPixels>patch.pixels*.05));
+    const photographicFlowRightward=photographicDrift.every(interval=>interval.bands.filter(band=>band.rightwardEvidence).length>=2);
+    // Compare the same material over each short interval, in three vertically
+    // separated unmasked areas. After minutes of playback the displacement
+    // must still agree across height; y-dependent velocity stretched clouds.
+    const shapeDiagnostics=photographicDrift.map(interval=>{
+      const expectedDisplacement=(interval.to-interval.from)*seamSpeed;
+      const horizontalSpread=Math.max(...interval.bands.map(band=>band.displacementX))-Math.min(...interval.bands.map(band=>band.displacementX));
+      return {from:interval.from,to:interval.to,expectedDisplacement,horizontalSpread,
+        shapePreserved:horizontalSpread<=1&&interval.bands.every(band=>Math.abs(band.displacementX-expectedDisplacement)<=1&&Math.abs(band.displacementY)<=1&&band.correlation>=.98)};
+    });
+    const coherentCloudShapes=shapeDiagnostics.every(interval=>interval.shapePreserved);
+    // Photographic edges contain much higher spatial contrast than the
+    // previous low-contrast mist. Allow up to 16/255 locally while retaining
+    // the mean <1/255 gate and exposing halfway interpolation residuals.
+    const temporallySmooth=continuity.every(boundary=>boundary.samples.every(frame=>[...frame.clouds,frame.seam].every(patch=>patch.mean<1&&patch.maximum<=16)));
+    const result=architectureUnchanged&&cloudsMoving&&earlyMotionVisible&&photographicFlowRightward&&coherentCloudShapes&&temporallySmooth?'PASS':'FAIL';
+    const maxTemporalChange=Math.max(...continuity.flatMap(boundary=>boundary.samples.flatMap(frame=>[...frame.clouds,frame.seam].map(patch=>patch.maximum))));
+    const maxTemporalMean=Math.max(...continuity.flatMap(boundary=>boundary.samples.flatMap(frame=>[...frame.clouds,frame.seam].map(patch=>patch.mean))));
+    $('status').textContent=`${result} · ограждения и нижний левый угол ${architectureUnchanged?'неподвижны':'изменяются'} · первые 4 с ${earlyMotionVisible?'дают заметное изменение':'меняются слишком слабо'} · направление ${photographicFlowRightward?'вправо':'не подтверждено'} · форма ${coherentCloudShapes?'сохраняется':'искажается'} · поток ${temporallySmooth?'плавный':'имеет скачки'}`;
+    $('status').dataset.result=result;
+    $('counts').textContent=`${patches.length} неподвижных участков × ${times.length} моментов · ${clouds.length} облачных участка · ${continuity.length*2} пар соседних кадров. Максимальное изменение за 0,05 с: ${maxTemporalChange}/255, среднее не выше ${maxTemporalMean}/255.`;
+    $('report').textContent=JSON.stringify({result,times,stormTime:0,architectureUnchanged,cloudsMoving,earlyMotionVisible,earlyChange,photographicFlowRightward,coherentCloudShapes,cloudShapeDiagnostic:{method:"The same unmasked cloud material is matched over four-second intervals at 0, 180 and 600 seconds and near texture wrapping. One coherent translation must retain the same displacement across three separated heights.",intervals:shapeDiagnostics},directionalDiagnostic:{method:'Correlation of smoothed GPU temporal differences over 0–0.75 s and 4–4.75 s. Diagnostic evidence only; inspect animation for naturalness.',bands:drift},photographicDriftDiagnostic:{method:'Direct correlation of smoothed photographic luminance over four-second intervals, including both sides of the former 22-second reset and the late spatial texture seam. Positive displacement is rightward. Every interval must have rightward evidence in at least two of its three bands; late intervals also expose accumulated deformation.',intervals:photographicDrift},formerCycleResetDiagnostic:{from:0,to:44,exactRepeat:cycleReset.maximum===0,...cycleReset},spatialSeam:{point:seamPoint,speed:seamSpeed,time:seamTime,textureWidth:diagnostics?.textureWidth,localPatch:seamPatch},temporallySmooth,halfStepDiagnostic:{method:'Actual t+0.025 frame minus the linear midpoint of t and t+0.05 frames. Residuals identify abrupt temporal changes independently of high-contrast photographic edges.',maximum:Math.max(...continuity.flatMap(boundary=>boundary.samples.flatMap(frame=>[...frame.clouds,frame.seam].map(patch=>patch.halfStepResidual.maximum)))),meanMaximum:Math.max(...continuity.flatMap(boundary=>boundary.samples.flatMap(frame=>[...frame.clouds,frame.seam].map(patch=>patch.halfStepResidual.mean))))},thresholds:{architectureMaximum:0,earlyMeanMinimum:2,earlyPixelChangeMinimum:2,earlyChangedFractionMinimum:.25,cloudMeanMinimum:.06,cloudChangedFractionMinimum:.05,temporalMeanMaximum:1,temporalMaximum:16,rightwardBandsPerIntervalMinimum:2,shapeCorrelationMinimum:.98,shapeDisplacementTolerance:1,shapeHorizontalSpreadMaximum:1,shapeVerticalDisplacementMaximum:1},diagnostics,comparisons,continuity},null,2);
+    document.title=result+' — Плавность облаков и неподвижность ограждений';
+  }catch(error){
+    $('status').textContent='FAIL · '+error.message;$('status').dataset.result='FAIL';$('report').textContent=error.stack;document.title='FAIL — Плавность облаков';console.error(error);
+  }
+})();
+</script>
+</html>

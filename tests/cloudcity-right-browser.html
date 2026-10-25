@@ -1,0 +1,32 @@
+<!doctype html><html lang="ru"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Правая архитектура Cloudcity</title>
+<style>body{margin:20px;background:#101923;color:#e6edf3;font:14px system-ui}canvas{display:block;width:100%;height:auto;margin:12px 0}pre{white-space:pre-wrap}h1{font-size:22px}</style>
+<h1>Правые башни и переходы при движении облаков</h1>
+<p id="status" role="status">Проверка WebGL…</p>
+<canvas id="view" width="1672" height="941" aria-label="Полная сцена через десять минут движения облаков"></canvas>
+<pre id="report"></pre>
+<script src="../cloudcity-atmosphere.js?v=right-facades-20261025"></script>
+<script>
+(async()=>{
+  const status=document.getElementById('status'),report=document.getElementById('report');
+  try{
+    const photo=new Image();photo.src='../assets/cloudcity.png';await photo.decode();
+    const renderer=window.createCloudcityAtmosphere(photo);await renderer.ready;
+    const canvas=document.getElementById('view'),ctx=canvas.getContext('2d',{willReadFrequently:true});
+    const points=[[1310,420],[1317,450],[1328,407],[1258,415],[1375,417],[1359,678],[1480,600]];
+    const read=()=>points.map(([x,y])=>Array.from(ctx.getImageData(x,y,1,1).data));
+    ctx.drawImage(photo,0,0);const original=read();
+    const frames=[];
+    for(const t of [0,60,600]){
+      renderer.render(ctx,0,t);
+      const pixels=read(),max=Math.max(...pixels.flatMap((p,i)=>p.map((v,k)=>Math.abs(v-original[i][k]))));
+      frames.push({time:t,maximumArchitectureChange:max});
+    }
+    const pass=frames.every(f=>f.maximumArchitectureChange<=1);
+    status.textContent=pass?'PASS — правые фасады и мосты не перекрываются облаками':'FAIL — облака повреждают правую архитектуру';
+    status.dataset.result=pass?'PASS':'FAIL';report.textContent=JSON.stringify({pass,points,frames},null,2);
+    document.title=(pass?'PASS':'FAIL')+' — Правая архитектура Cloudcity';
+  }catch(e){status.textContent='FAIL — '+e.message;status.dataset.result='FAIL';report.textContent=e.stack;}
+})();
+</script></html>

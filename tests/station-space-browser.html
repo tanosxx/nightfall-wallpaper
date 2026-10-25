@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Station space background verification</title>
+<style>body{margin:20px;background:#10141c;color:#d6e1ef;font:14px system-ui}canvas{display:block;width:min(100%,1672px);height:auto;margin-top:16px;border:1px solid #354353}pre{white-space:pre-wrap}</style>
+<h1>Station space background verification</h1>
+<pre id="result">Running canvas pixel checks…</pre>
+<canvas id="preview" width="1672" height="941" aria-label="Station with moving space overlay at ten seconds"></canvas>
+<script src="../station-data-browser.js"></script>
+<script src="../station-space.js"></script>
+<script>
+(async () => {
+  const W=1672,H=941, result=document.getElementById('result');
+  const assert=(condition,message)=>{if(!condition)throw new Error(message);};
+  try {
+    const make=()=>Object.assign(document.createElement('canvas'),{width:W,height:H});
+    const canvas=make(),ctx=canvas.getContext('2d',{willReadFrequently:true});
+    const scene=window.createStationSpace(window.STATION);
+    const render=t=>{ctx.clearRect(0,0,W,H);scene.render(ctx,t);return ctx.getImageData(0,0,W,H).data;};
+    const frames=[0,1.8,10,19.5].map(t=>({t,pixels:render(t)}));
+    const mask=scene.mask.getContext('2d',{willReadFrequently:true}).getImageData(0,0,W,H).data;
+    const sample=window.STATION_SPACE.sample;
+    const clearMask=p=>{
+      if(p.x<4||p.x>=W-4||p.y<4||p.y>=H-4)return false;
+      for(const dx of [-4,0,4])for(const dy of [-4,0,4])if(mask[(Math.floor(p.y+dy)*W+Math.floor(p.x+dx))*4+3]<250)return false;
+      return true;
+    };
+    const visibleTop=p=>p.near&&p.x>=344&&p.x<=1328&&p.y>=0&&p.y<=230&&p.alpha>=.5&&clearMask(p);
+    const initial=sample(0),three=sample(3),visibleNear=initial.map((p,i)=>visibleTop(p)?i:-1).filter(i=>i>=0);
+    const readableNear=visibleNear.filter(i=>visibleTop(three[i])&&Math.hypot(three[i].x-initial[i].x,three[i].y-initial[i].y)>=10);
+    assert(visibleNear.length>=8,'Fewer than eight bright near grains survive the crop and actual raster mask');
+    assert(readableNear.length>=6,'Fewer than six visible near grains travel ten pixels in three seconds');
+    let visibleFlashFrames=0;
+    for(let frame=0;frame<96;frame++)if(sample(frame/24).some(p=>visibleTop(p)&&p.flash>.25))visibleFlashFrames++;
+    assert(visibleFlashFrames>0,'No unoccluded glint is visible in the first four seconds');
+    // Photo landmarks independent of the implementation's polygon list. A
+    // 5×5 patch around each must stay completely free of background overlays.
+    const landmarks=[
+      ['central hull',1060,350],['forward ring',790,620],['rear ring',820,245],
+      ['left truss',820,356],['right truss',1215,430],
+      ['top mast',1330,40],['central mast',1033,180],
+      ['upper solar panel',1104,151],['right solar panel',1602,285],
+      ['hangar parked cargo',1217,660],['hangar floor',1260,667],
+      ['lower left pier',1133,786],['lower right pier',1455,724],
+      ['right pier',1575,637],['small parked craft below',1284,771],
+      ['small parked craft right',1558,705],['lower central mast',998,796],
+    ];
+    let protectedPixels=0;
+    for(const [name,x,y] of landmarks) for(let dy=-2;dy<=2;dy++) for(let dx=-2;dx<=2;dx++) {
+      const offset=((y+dy)*W+x+dx)*4;
+      assert(mask[offset+3]===0,`${name}: background mask leaks at ${x+dx},${y+dy}`);
+      for(const frame of frames) assert(frame.pixels[offset+3]===0,`${name}: overlay reaches foreground at t=${frame.t}`);
+      protectedPixels++;
+    }
+    for(const [x,y] of [[200,350],[300,800],[700,380],[150,160]]) assert(mask[(y*W+x)*4+3]>240,`Open sky incorrectly blocked at ${x},${y}`);
+    let changedBackgroundPixels=0,changedForegroundPixels=0,visiblePixels0=0,visiblePixels10=0;
+    for(let offset=0;offset<frames[0].pixels.length;offset+=4) {
+      const a=frames[0].pixels,b=frames[2].pixels;
+      if(a[offset+3])visiblePixels0++; if(b[offset+3])visiblePixels10++;
+      if(a[offset]!==b[offset]||a[offset+1]!==b[offset+1]||a[offset+2]!==b[offset+2]||a[offset+3]!==b[offset+3]) {
+        if(mask[offset+3]===0)changedForegroundPixels++; else changedBackgroundPixels++;
+      }
+    }
+    assert(changedForegroundPixels===0,'Space motion leaks onto masked foreground');
+    assert(changedBackgroundPixels>500,'Background change is not visible over ten seconds');
+    assert(visiblePixels0>1000&&visiblePixels10>1000,'Background veil is missing');
+    const paused=render(10), repeated=render(10);
+    assert(paused.every((value,index)=>value===repeated[index]),'Paused rendering changes pixels');
+    // Ensure render() preserves the caller's composition settings.
+    ctx.globalAlpha=.7;ctx.globalCompositeOperation='source-over';scene.render(ctx,10);
+    assert(Math.abs(ctx.globalAlpha-.7)<.00001&&ctx.globalCompositeOperation==='source-over','Renderer leaks canvas state');
+    const photo=new Image();photo.src='../assets/station.png';await photo.decode();
+    const composite=make(),composition=composite.getContext('2d',{willReadFrequently:true});
+    const composedAt=t=>{composition.clearRect(0,0,W,H);composition.drawImage(photo,0,0);scene.render(composition,t);return composition.getImageData(0,0,W,H).data;};
+    const composed0=composedAt(0),composed3=composedAt(3);let highContrastCropPixels=0;
+    for(let y=0;y<230;y++)for(let x=344;x<=1328;x++){
+      const o=(y*W+x)*4;
+      if(Math.max(Math.abs(composed0[o]-composed3[o]),Math.abs(composed0[o+1]-composed3[o+1]),Math.abs(composed0[o+2]-composed3[o+2]))>=18)highContrastCropPixels++;
+    }
+    assert(highContrastCropPixels>=40,'Particle motion is lost against the actual photo after compositing');
+    const preview=document.getElementById('preview').getContext('2d');preview.drawImage(photo,0,0);scene.render(preview,10);
+    const report={status:'PASS',times:frames.map(f=>f.t),landmarks:landmarks.map(p=>p[0]),protectedPixels,
+      changedBackgroundPixels,changedForegroundPixels,visiblePixels0,visiblePixels10,pause:'pixel exact',
+      narrowPreview:{visibleNearAtStart:visibleNear.length,movingTenPixelsInThreeSeconds:readableNear.length,visibleFlashFramesInFourSeconds:visibleFlashFrames,highContrastPixelsAfterThreeSeconds:highContrastCropPixels}};
+    result.textContent=JSON.stringify(report,null,2);document.title='PASS — station space';
+  } catch(error) {result.textContent=JSON.stringify({status:'FAIL',message:error.message,stack:error.stack},null,2);document.title='FAIL — station space';}
+})();
+</script>
+</html>

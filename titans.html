@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark">
+  <title>Пепел титанов · живые обои</title><link rel="icon" href="data:,"><link rel="stylesheet" href="preview.css">
+  <style>:root{background:#10100f}.city{background-image:url(assets/titans.png);background-size:contain}.eyebrow{color:#e0b48b}.caption p{color:#c8b9ab}.actions{background:#171512ba}.shade{display:none}input[type=range]{accent-color:#ddab79}</style>
+</head>
+<body>
+  <script>if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('embedded');</script>
+  <main aria-label="Пепел титанов: горящие обломки, дым падающих дредноутов, далёкие взрывы и огни разборки гигантских роботов">
+    <div class="city" aria-hidden="true"></div><canvas id="atmosphere" aria-hidden="true"></canvas>
+  </main>
+  <aside id="controls" aria-label="Управление предпросмотром">
+    <div class="caption"><span class="eyebrow">ЖИВЫЕ ОБОИ / ПОСЛЕ ПОСЛЕДНЕЙ БИТВЫ</span><h1>Пепел титанов<span>07</span></h1><p>Над полем обломков ещё горит небо.</p></div>
+    <div class="actions">
+      <button id="play" aria-label="Приостановить анимацию"><span id="playIcon">Ⅱ</span><span id="playText">Пауза</span></button>
+      <label class="rain-label" for="rain">Активность<input id="rain" type="range" min="0" max="100" value="100" aria-label="Активность сцены"></label>
+      <button id="fullscreen" aria-label="Полный экран"><span>⛶</span><span>Во весь экран</span></button>
+    </div><div class="hint">пробел — пауза · F — полный экран · H — скрыть панель</div>
+  </aside>
+  <div id="error" role="alert" hidden>Не удалось загрузить сцену. Откройте её из полной папки обоев.</div>
+  <script type="module" src="titans-scene.js?v=15"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Ночной рубеж · живые обои</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+  <script>if(new URLSearchParams(location.search).has("embed"))document.documentElement.classList.add("embedded");</script>
+  <main aria-label="Постапокалиптический город ночью: дождь, огни и далёкие корабли">
+    <div class="city" aria-hidden="true"></div>
+    <canvas id="photoFlow" aria-hidden="true"></canvas>
+    <canvas id="atmosphere" aria-hidden="true"></canvas>
+    <div class="shade" aria-hidden="true"></div>
+  </main>
+  <aside id="controls" aria-label="Управление предпросмотром">
+    <div class="caption"><span class="eyebrow">ЖИВЫЕ ОБОИ / ЖИВОЙ ГОРОД</span><h1>Ночной рубеж<span>04</span></h1><p>Даже после конца света жизнь продолжается.</p></div>
+    <div class="actions">
+      <button id="play" title="Пауза — пробел" aria-label="Приостановить анимацию"><span id="playIcon">Ⅱ</span><span id="playText">Пауза</span></button>
+      <label class="rain-label" for="rain">Дождь<input id="rain" type="range" min="0" max="100" value="70" aria-label="Интенсивность дождя"></label>
+      <label class="rain-label" for="life">Город<input id="life" type="range" min="0" max="100" value="100" aria-label="Активность города"></label>
+      <button id="fullscreen" title="Полный экран — F" aria-label="Полный экран"><span>⛶</span><span>Во весь экран</span></button>
+    </div>
+    <div class="hint">пробел — пауза · F — полный экран · H — скрыть панель</div>
+  </aside>
+  <div id="error" role="alert" hidden>Не удалось загрузить фон. Откройте файл из полной папки обоев.</div>
+  <script src="scene-data-browser.js"></script>
+  <script src="simulation-browser.js"></script>
+  <script src="photo-flow.js"></script>
+  <script src="scene.js"></script>
+</body>
+</html>

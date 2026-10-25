@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Город над облаками — проверка движения</title>
+<style>
+  *{box-sizing:border-box}body{margin:18px;background:#0b141c;color:#d9e6e9;font:14px system-ui}
+  h1{font-size:19px;margin:0 0 12px}button,input{font:inherit;color:inherit;background:#1c303c;border:1px solid #45606d;border-radius:5px;padding:7px 10px}
+  button{cursor:pointer}button[aria-pressed=true]{background:#315667;border-color:#9bcad4}input[type=number]{width:108px}input[type=range]{width:130px}
+  .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}label{display:flex;align-items:center;gap:7px}
+  canvas{display:block;max-width:100%;height:auto;background:#071019}#preview{width:min(100%,1672px);border:1px solid #3a525c}
+  .crops{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-top:18px}.crops figure{margin:0}.crops canvas{margin-top:7px;border:1px solid #3a525c}
+  #turbineCrop{width:600px}#stormCrop{width:920px}#windowsCrop{width:660px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}#status{margin:10px 0}details{margin-top:18px}
+</style>
+<h1>Город над облаками — фиксированные кадры и движение</h1>
+<div class="controls" aria-label="Время сцены">
+  <button data-time="0" disabled>0 с</button><button data-time="3" disabled>3 с</button><button data-time="6.48" disabled>6,48 с</button>
+  <button data-time="10" disabled>10 с</button><button data-time="25.88" disabled>25,88 с</button><button data-time="40" disabled>40 с</button>
+  <label>Время, с <input id="time" type="number" min="0" step=".01" value="0"></label>
+  <button id="render" disabled>Показать кадр</button><button id="play" aria-pressed="false" disabled>Запустить движение</button>
+</div>
+<div class="controls" aria-label="Сравнение сцены">
+  <button id="normal" aria-pressed="true" disabled>Полная сцена</button><button id="original" aria-pressed="false" disabled>Исходное изображение</button>
+  <label>Сила ветра <input id="wind" type="range" min="0" max="100" value="65"><span id="windValue">65%</span></label>
+</div>
+<p id="status" role="status">Загрузка города и анимации…</p>
+<canvas id="preview" width="1672" height="941" aria-label="Полный кадр города над облаками"></canvas>
+<div class="crops">
+  <figure><figcaption>Большая турбина ×3</figcaption><canvas id="turbineCrop" width="200" height="270" aria-label="Крупный план вращения большой турбины"></canvas></figure>
+  <figure><figcaption>Далёкая гроза ×2</figcaption><canvas id="stormCrop" width="460" height="190" aria-label="Крупный план грозы на горизонте"></canvas></figure>
+  <figure><figcaption>Окна башни ×2</figcaption><canvas id="windowsCrop" width="330" height="300" aria-label="Крупный план освещённых окон башни"></canvas></figure>
+</div>
+<details><summary>Диагностика анимации</summary><pre id="report" aria-label="Состояние облаков, освещения и турбин">Ожидание…</pre></details>
+<script src="../cloudcity-atmosphere.js"></script><script src="../cloudcity-lights.js"></script><script src="../cloudcity-turbines.js"></script><script src="../cloudcity-renderer.js"></script>
+<script>
+(async()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),canvas=$('preview'),ctx=canvas.getContext('2d');
+  let renderer,time=0,strength=.65,view='normal',playing=false,last=null,lastPaint=-Infinity,frame;
+  function reportError(error){playing=false;cancelAnimationFrame(frame);$('status').textContent='FAIL: '+error.message;$('report').textContent=error.stack;document.title='FAIL — Город над облаками';canvas.dataset.ready='false';console.error(error);}
+  try{
+    const photo=new Image();photo.src='../assets/cloudcity.png';await photo.decode();
+    renderer=window.createCloudcityScene(photo);if(renderer.ready)await renderer.ready;
+    const W=photo.naturalWidth,H=photo.naturalHeight;canvas.width=W;canvas.height=H;
+    const crops=[['turbineCrop',365,315,200,270],['stormCrop',930,145,460,190],['windowsCrop',160,0,330,300]];
+    function draw(){
+      ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,W,H);
+      if(view==='original')ctx.drawImage(photo,0,0);else renderer.render(ctx,time,strength,time);
+      for(const [id,x,y,w,h] of crops){const c=$(id).getContext('2d');c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,w,h);c.drawImage(canvas,x,y,w,h,0,0,w,h);}
+      for(const button of document.querySelectorAll('[data-time]'))button.setAttribute('aria-pressed',String(Math.abs(Number(button.dataset.time)-time)<.001));
+      $('normal').setAttribute('aria-pressed',String(view==='normal'));$('original').setAttribute('aria-pressed',String(view==='original'));
+      $('play').setAttribute('aria-pressed',String(playing));$('play').textContent=playing?'Остановить движение':'Запустить движение';
+      $('status').textContent=`READY · ${view} · t=${time.toFixed(3)} с · ${playing?'движение':'неподвижный кадр'} · исходник ${W}×${H}`;
+      canvas.dataset.time=time.toFixed(4);canvas.dataset.ready='true';canvas.dataset.view=view;canvas.dataset.playing=String(playing);canvas.dataset.strength=String(strength);
+      if(document.activeElement!==$('time'))$('time').value=time.toFixed(3);
+      $('report').textContent=JSON.stringify({status:'READY',time,windTime:time,strength,view,playing,diagnostics:renderer.getDiagnostics?.()},null,2);
+    }
+    function tick(now){
+      if(!playing||document.hidden){last=null;return;}
+      if(last!==null)time+=Math.min(2,Math.max(0,(now-last)/1000));last=now;
+      try{if(now-lastPaint>=1000/30){draw();lastPaint=now;}frame=requestAnimationFrame(tick);}catch(error){reportError(error);}
+    }
+    function setPlaying(value){playing=value;cancelAnimationFrame(frame);last=null;lastPaint=-Infinity;draw();if(playing&&!document.hidden)frame=requestAnimationFrame(tick);}
+    function seek(value){setPlaying(false);time=Math.max(0,Number(value)||0);draw();}
+    for(const button of document.querySelectorAll('button'))button.disabled=false;
+    for(const button of document.querySelectorAll('[data-time]'))button.addEventListener('click',()=>seek(button.dataset.time));
+    $('render').addEventListener('click',()=>seek($('time').value));$('time').addEventListener('change',()=>seek($('time').value));$('play').addEventListener('click',()=>setPlaying(!playing));
+    for(const mode of ['normal','original'])$(mode).addEventListener('click',()=>{view=mode;draw();});
+    $('wind').addEventListener('input',()=>{strength=Number($('wind').value)/100;$('windValue').textContent=Math.round(strength*100)+'%';draw();});
+    document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(frame);last=null;if(playing&&!document.hidden)frame=requestAnimationFrame(tick);});
+    seek(new URLSearchParams(location.search).get('time')||0);
+  }catch(error){reportError(error);}
+})();
+</script>
+</html>

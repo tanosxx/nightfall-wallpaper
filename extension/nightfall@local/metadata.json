@@ -1,0 +1,13 @@
+{
+  "uuid": "nightfall@local",
+  "name": "Nightfall — Living Wallpapers",
+  "description": "Seven animated worlds: a rainy night city, polar station, deep-space station, underwater base, futuristic railway junction, city above the clouds and the burning wrecks of Fallen Titans. Scene library, panel switching, pause and atmosphere controls. Existing wallpaper settings are preserved.",
+  "shell-version": [
+    "50"
+  ],
+  "version": 15,
+  "session-modes": [
+    "user"
+  ],
+  "settings-schema": "org.gnome.shell.extensions.nightfall"
+}

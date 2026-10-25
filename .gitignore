@@ -1,0 +1,50 @@
+# Local environments and caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/
+.cache/
+.DS_Store
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Local credentials and tool/session state
+.env
+.env.*
+!.env.example
+.aws/
+.codex/
+.agents/
+
+# Build, release and preview staging
+/dist/
+/build/
+/release/
+/releases/
+/_site/
+.jekyll-cache/
+*.zip
+*.tar.gz
+*.tar.xz
+*.tgz
+SHA256SUMS
+**/schemas/gschemas.compiled
+/extension/nightfall@local/assets/
+/extension/nightfall@local/app/
+/extension/nightfall@local/bundle-manifest.json
+
+# Local installations, backups and visual test output
+/backups/
+/backup/
+/validation/
+/installed-*
+/installation-*
+/VALIDATION*
+/*.png
+/*.jpg
+/*.jpeg
+/*.mp4
+/*.webm

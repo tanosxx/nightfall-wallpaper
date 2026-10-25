@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Бездна — движение в переходах</title>
+<style>
+  body{margin:10px;background:#0c171e;color:#d9e6e9;font:13px system-ui}
+  h1{font-size:16px;margin:0 0 5px}#status{margin:0 0 7px;color:#9ab8c2}
+  canvas{display:block;width:min(100%,1200px);height:auto;max-height:540px}
+  details{margin-top:8px}pre{white-space:pre-wrap;font-size:11px}
+</style>
+<h1>Бездна — люди за стеклом переходов</h1>
+<div id="status" role="status">Загрузка…</div>
+<canvas id="transitPairs" width="1200" height="540" aria-label="Левый и правый стеклянные переходы, кадры на пятой и восемнадцатой секундах"></canvas>
+<details><summary>Данные кадров</summary><pre id="report"></pre></details>
+<script src="../abyss-transit.js"></script>
+<script>
+(async()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),canvas=$('transitPairs'),ctx=canvas.getContext('2d');
+  try{
+    const photo=new Image();photo.src='../assets/abyss.png';await photo.decode();
+    const transit=window.createAbyssTransit(photo),times=[5,18];
+    const frames=times.map(time=>{
+      const frame=document.createElement('canvas');frame.width=1672;frame.height=941;
+      const c=frame.getContext('2d');c.drawImage(photo,0,0);transit.render(c,time);return frame;
+    });
+    const regions=[
+      {name:'01 · Западный переход',box:[591,347,223,100]},
+      {name:'02 · Восточный переход',box:[1316,252,160,95]},
+    ];
+    ctx.fillStyle='#0c171e';ctx.fillRect(0,0,1200,540);ctx.textBaseline='top';
+    regions.forEach((region,row)=>{
+      const y=row*270,[sx,sy,sw,sh]=region.box;
+      ctx.fillStyle='#d9e6e9';ctx.font='bold 15px system-ui';ctx.fillText(region.name,12,y+9);
+      times.forEach((time,column)=>{
+        const x=column*600;
+        ctx.font='12px system-ui';ctx.fillStyle='#9ab8c2';ctx.fillText(`t = ${time} с`,x+14,y+31);
+        const scale=Math.min(566/sw,209/sh),dw=sw*scale,dh=sh*scale;
+        ctx.drawImage(frames[column],sx,sy,sw,sh,x+17+(566-dw)/2,y+51,dw,dh);
+        ctx.strokeStyle='#293e48';ctx.strokeRect(x+.5,y+.5,599,269);
+      });
+    });
+    canvas.dataset.ready='true';
+    $('status').textContent='READY · только исходное изображение + люди в переходах · без освещения, воды и частиц';
+    $('report').textContent=JSON.stringify({times,regions,people:times.map(time=>({time,people:window.ABYSS_TRANSIT.sample(time)}))},null,2);
+  }catch(error){$('status').textContent='FAIL: '+error.message;$('report').textContent=error.stack;console.error(error);}
+})();
+</script>
+</html>

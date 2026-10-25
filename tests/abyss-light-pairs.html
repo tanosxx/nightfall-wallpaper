@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Бездна — границы освещения</title>
+<style>
+  body{margin:12px;background:#0c171e;color:#d9e6e9;font:14px system-ui}h1{font-size:17px;margin:0 0 10px}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}button,input{font:inherit;color:inherit;background:#1d333d;border:1px solid #46616b;border-radius:4px;padding:6px 10px}button{cursor:pointer}button[aria-pressed=true]{background:#456674}input{width:80px}
+  canvas{display:block;width:min(100%,1200px);height:auto;max-height:600px}pre{font-size:12px;white-space:pre-wrap}#status{margin:8px 0}
+</style>
+<h1>Бездна — оригинал и состояние света рядом</h1>
+<div class="controls" aria-label="Состояние справа">
+  <button id="off" aria-pressed="true">OFF · всё выключено</button>
+  <button id="on" aria-pressed="false">ON · всё включено</button>
+  <button id="normal" aria-pressed="false">Состояние по времени</button>
+  <label>Время, с <input id="time" type="number" min="0" step=".05" value="5"></label>
+</div>
+<div id="status" role="status">Загрузка…</div>
+<canvas id="diagnosticPairs" width="1200" height="600" aria-label="Четыре пары оригинал и выключенный свет: центральный прожектор, западные окна, центральные окна и тёплая наружная лампа"></canvas>
+<pre id="report" aria-label="Данные сравнения"></pre>
+<script src="../abyss-practicals.js"></script>
+<script src="../abyss-radiance.js"></script>
+<script src="../abyss-lighting.js"></script>
+<script>
+(async()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),pairs=$('diagnosticPairs'),ctx=pairs.getContext('2d');
+  try{
+    const photo=new Image();photo.src='../assets/abyss.png';await photo.decode();
+    const lighting=window.createAbyssLighting(photo),plate=document.createElement('canvas');plate.width=photo.naturalWidth;plate.height=photo.naturalHeight;
+    const p=plate.getContext('2d',{willReadFrequently:true});
+    const regions=[
+      {name:'01 · Белый центральный прожектор',box:[835,405,230,190]},
+      {name:'02 · Западный модуль: полные окна',box:[467,345,85,100]},
+      {name:'03 · Центральная колонна: три окна',box:[983,456,37,93]},
+      {name:'04 · Тёплая наружная лампа и стена',box:[1065,450,95,115]}
+    ];
+    let mode='off';
+    function frame(){
+      const time=Math.max(0,Number($('time').value)||0);lighting.render(p,time,{override:mode});
+      ctx.fillStyle='#0c171e';ctx.fillRect(0,0,1200,600);ctx.textBaseline='top';
+      regions.forEach((region,i)=>{
+        const x=(i%2)*600,y=Math.floor(i/2)*300,[sx,sy,sw,sh]=region.box;
+        ctx.fillStyle='#d9e6e9';ctx.font='bold 15px system-ui';ctx.fillText(region.name,x+12,y+8);
+        ctx.font='12px system-ui';ctx.fillStyle='#9ab8c2';ctx.fillText('ORIGINAL',x+12,y+30);ctx.fillText(mode==='normal'?`t=${time.toFixed(2)} с`:mode.toUpperCase(),x+310,y+30);
+        const scale=Math.min(278/sw,244/sh),dw=sw*scale,dh=sh*scale;
+        ctx.drawImage(photo,sx,sy,sw,sh,x+12+(278-dw)/2,y+48,dw,dh);
+        ctx.drawImage(plate,sx,sy,sw,sh,x+310+(278-dw)/2,y+48,dw,dh);
+        ctx.strokeStyle='#293e48';ctx.strokeRect(x+.5,y+.5,599,299);
+      });
+      for(const id of ['off','on','normal'])$(id).setAttribute('aria-pressed',String(mode===id));
+      pairs.dataset.ready='true';pairs.dataset.mode=mode;pairs.dataset.time=String(time);
+      $('status').textContent=`READY · ORIGINAL / ${mode.toUpperCase()} · 1200×600 · без воды и частиц`;
+      $('report').textContent=JSON.stringify({mode,time,regions,diagnostics:lighting.getDiagnostics(),lighting:window.ABYSS_LIGHTING.sample(time),practicals:window.ABYSS_PRACTICALS.sample(time)},null,2);
+    }
+    for(const id of ['off','on','normal'])$(id).addEventListener('click',()=>{mode=id;frame();});
+    $('time').addEventListener('input',frame);frame();
+  }catch(error){$('status').textContent='FAIL: '+error.message;$('report').textContent=error.stack;console.error(error);}
+})();
+</script>
+</html>

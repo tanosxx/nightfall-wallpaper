@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Бездна — проверка активности</title>
+<style>
+  *{box-sizing:border-box}body{margin:18px;background:#0c171e;color:#d9e6e9;font:14px system-ui}
+  h1{font-size:19px;margin:0 0 12px}button,input{font:inherit;color:inherit;background:#1d333d;border:1px solid #46616b;border-radius:5px;padding:7px 10px}
+  button{cursor:pointer}button[aria-pressed=true]{background:#355966;border-color:#9bcad4}input{width:100px}
+  .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}label{display:flex;align-items:center;gap:7px}
+  canvas{display:block;max-width:100%;height:auto;background:#091319}#preview{width:min(100%,1672px);border:1px solid #3a525c}
+  .crops{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-top:18px}.crops figure{margin:0}.crops canvas{margin-top:7px;border:1px solid #3a525c}
+  #interiorCrop{width:896px}#shaftCrop{width:74px}#lampCrop{width:460px}#leftWindowsCrop{width:800px}#centralWindowsCrop{width:90px}#amberLampCrop{width:340px}#tunnelCrop{width:580px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}#status{margin:10px 0}
+</style>
+<h1>Бездна — фиксированные кадры активности</h1>
+<div class="controls" aria-label="Время сцены">
+  <button data-time="0">0 с</button><button data-time="5">5 с</button><button data-time="12">12 с</button>
+  <button data-time="25">25 с</button><button data-time="45">45 с</button><button data-time="70">70 с</button>
+  <button id="fault" disabled>Найти сбой лампы</button>
+  <label>Время, с <input id="time" type="number" min="0" step=".05" value="0"></label>
+  <button id="render" disabled>Показать кадр</button>
+</div>
+<div id="interiorTimes" class="controls" aria-label="Посадка и вставание в обсерватории"><span>Обсерватория:</span></div>
+<div class="controls" aria-label="Сравнение освещения">
+  <button id="normal" aria-pressed="true">Анимация</button>
+  <button id="original" aria-pressed="false">Оригинальное фото</button>
+  <button id="lightsOff" aria-pressed="false" disabled>Все лампы выключены</button>
+  <button id="lightsOn" aria-pressed="false" disabled>Все лампы включены</button>
+  <span id="diagnosticSupport">Проверка API диагностики…</span>
+</div>
+<p id="status" role="status">Загрузка изображения и модулей…</p>
+<canvas id="preview" width="1672" height="941" aria-label="Полный кадр глубоководной станции"></canvas>
+<div class="crops">
+  <figure><figcaption>Вся обсерватория ×2</figcaption><canvas id="interiorCrop" width="448" height="107" aria-label="Крупный план всей обсерватории, включая крайние секции"></canvas></figure>
+  <figure><figcaption>Шахта ×2</figcaption><canvas id="shaftCrop" width="37" height="338" aria-label="Крупный план лифта"></canvas></figure>
+  <figure><figcaption>Прожектор и луч ×2</figcaption><canvas id="lampCrop" width="230" height="190" aria-label="Крупный план прожектора"></canvas></figure>
+  <figure><figcaption>Все окна левых модулей ×2</figcaption><canvas id="leftWindowsCrop" width="400" height="220" aria-label="Полные оконные группы левых модулей"></canvas></figure>
+  <figure><figcaption>Окна центральной колонны ×2</figcaption><canvas id="centralWindowsCrop" width="45" height="315" aria-label="Узкие окна центральной колонны"></canvas></figure>
+  <figure><figcaption>Тёплая лампа и освещённая стена ×2</figcaption><canvas id="amberLampCrop" width="170" height="215" aria-label="Янтарная лампа на центральной стене"></canvas></figure>
+  <figure><figcaption>Весь левый тоннель ×2</figcaption><canvas id="tunnelCrop" width="290" height="145" aria-label="Стеклянный переход между левыми модулями"></canvas></figure>
+</div>
+<pre id="report" aria-label="Численные состояния кадра">Ожидание…</pre>
+<script src="../abyss-water.js"></script>
+<script src="../abyss-practicals.js"></script>
+<script src="../abyss-radiance.js"></script>
+<script src="../abyss-lighting.js"></script>
+<script src="../abyss-elevator.js"></script>
+<script src="../abyss-interior.js"></script>
+<script src="../abyss-transit.js"></script>
+<script>
+(async()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),canvas=$('preview'),ctx=canvas.getContext('2d'),W=1672,H=941,strength=.7;
+  try{
+    const photo=new Image();photo.src='../assets/abyss.png';await photo.decode();
+    const water=window.createAbyssWater(photo),lighting=window.createAbyssLighting(photo),elevator=window.createAbyssElevator(photo),interior=window.createAbyssInterior(photo),transit=window.createAbyssTransit(photo);
+    // Discover an actual deepest dropout from the production sample. This
+    // remains useful when the light agent changes fixture schedules or phases.
+    let faultTime=0,faultDepth=-Infinity,faultLamp=-1;
+    for(let n=0;n<=4800;n++){
+      const t=n/40,powers=window.ABYSS_LIGHTING.sample(t).worklamps;
+      powers.forEach((depth,i)=>{if(Number.isFinite(depth)&&depth>faultDepth){faultDepth=depth;faultTime=t;faultLamp=i;}});
+    }
+    const supportsOverride=typeof lighting.getDiagnostics==='function'||lighting.supportsOverride===true;
+    let pixelComparison=null;
+    if(supportsOverride){
+      const check=document.createElement('canvas');check.width=W;check.height=H;
+      const p=check.getContext('2d',{willReadFrequently:true});p.drawImage(photo,0,0);
+      const original=p.getImageData(0,0,W,H).data;
+      lighting.render(p,0,{override:'on'});const on=p.getImageData(0,0,W,H).data;
+      let maximumChannelError=0,changedPixels=0;
+      for(let n=0;n<on.length;n+=4){let changed=false;for(let c=0;c<3;c++){const delta=Math.abs(on[n+c]-original[n+c]);maximumChannelError=Math.max(maximumChannelError,delta);changed||=delta>0;}if(changed)changedPixels++;}
+      pixelComparison={allOnVsOriginal:{maximumChannelError,changedPixels},source:'actual Canvas 2D pixels'};
+    }
+    let view='normal';
+    const interiorBounds=window.ABYSS_INTERIOR.bounds,interiorCrop=$('interiorCrop');
+    interiorCrop.width=interiorBounds.w+16;interiorCrop.height=interiorBounds.h+16;interiorCrop.style.width=(interiorCrop.width*2)+'px';
+    const seatedRoutine=window.ABYSS_INTERIOR.routines?.find(r=>r.nodes[0].seated&&r.nodes[1]?.seated&&r.nodes[0].travel>0);
+    if(seatedRoutine){
+      const node=seatedRoutine.nodes[0],phaseTime=phase=>(phase-seatedRoutine.offset+seatedRoutine.period)%seatedRoutine.period;
+      const moments=[['Сидит',node.wait/2],['Встаёт',node.wait-.7],['Идёт',node.wait+node.travel/2],['Садится',node.wait+node.travel+.65]];
+      for(const [label,phase] of moments){const button=document.createElement('button'),t=phaseTime(phase);button.dataset.time=String(t);button.textContent=`${label} · ${t.toFixed(2)} с`;$('interiorTimes').append(button);}
+    }
+    const crops=[['interiorCrop',interiorBounds.x-8,interiorBounds.y-8,interiorCrop.width,interiorCrop.height],['shaftCrop',619,462,37,338],['lampCrop',835,405,230,190],
+      ['leftWindowsCrop',455,235,400,220],['centralWindowsCrop',980,445,45,315],['amberLampCrop',1000,430,170,215],['tunnelCrop',575,340,290,145]];
+    function render(value){
+      const time=Math.max(0,Number.isFinite(Number(value))?Number(value):0),waterTime=time*(.35+strength*1.15);
+      $('time').value=String(time);ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,W,H);ctx.drawImage(photo,0,0,W,H);
+      if(view!=='original'){
+        if(supportsOverride){lighting.render(ctx,time,{override:view});if(view==='normal')water.refract(ctx,waterTime,lighting.canvas);}
+        else{water.refract(ctx,waterTime);lighting.render(ctx,time);}
+        // Off/on isolate the complete lighting plate, so moving particles or
+        // cabin lights cannot disguise a clipped pane or dark beam boundary.
+        if(view==='normal'){elevator.render(ctx,time);interior.render(ctx,time);transit.render(ctx,time);water.particles(ctx,waterTime,strength);}
+      }
+      for(const [id,x,y,w,h] of crops){const crop=$(id),c=crop.getContext('2d');c.clearRect(0,0,w,h);c.drawImage(canvas,x,y,w,h,0,0,w,h);}
+      for(const button of document.querySelectorAll('[data-time]'))button.setAttribute('aria-pressed',String(Number(button.dataset.time)===time));
+      for(const [id,mode] of [['normal','normal'],['original','original'],['lightsOff','off'],['lightsOn','on']])$(id).setAttribute('aria-pressed',String(view===mode));
+      $('status').textContent=`READY · ${view} · t=${time.toFixed(3)} с · неподвижный кадр · исходник ${W}×${H}`;
+      canvas.dataset.time=String(time);canvas.dataset.ready='true';canvas.dataset.view=view;
+      $('report').textContent=JSON.stringify({status:'READY',view,time,waterTime,strength,overrideSupported:supportsOverride,diagnostics:lighting.getDiagnostics?.(),pixelComparison,fault:{time:faultTime,lamp:faultLamp,depth:faultDepth},
+        lighting:window.ABYSS_LIGHTING.sample(time),practicals:window.ABYSS_PRACTICALS?.sample(time),elevator:window.ABYSS_ELEVATOR.sample(time),interior:window.ABYSS_INTERIOR.sample(time),transit:window.ABYSS_TRANSIT.sample(time)},null,2);
+    }
+    for(const button of document.querySelectorAll('[data-time]'))button.addEventListener('click',()=>render(button.dataset.time));
+    $('fault').disabled=false;$('fault').textContent=`Сбой лампы · ${faultTime.toFixed(3)} с`;$('fault').addEventListener('click',()=>render(faultTime));
+    $('render').disabled=false;$('render').addEventListener('click',()=>render($('time').value));$('time').addEventListener('input',()=>render($('time').value));
+    $('lightsOff').disabled=!supportsOverride;$('lightsOn').disabled=!supportsOverride;
+    $('diagnosticSupport').textContent=supportsOverride?'Диагностика полного слоя: on / off':'Off/on недоступны: renderer ещё не предоставляет API диагностики.';
+    for(const [id,mode] of [['normal','normal'],['original','original'],['lightsOff','off'],['lightsOn','on']])$(id).addEventListener('click',()=>{view=view===mode&&mode==='original'?'normal':mode;render($('time').value);});
+    render(new URLSearchParams(location.search).get('time')||0);
+  }catch(error){$('status').textContent='FAIL: '+error.message;$('report').textContent=error.stack;document.title='FAIL — Бездна';console.error(error);}
+})();
+</script>
+</html>

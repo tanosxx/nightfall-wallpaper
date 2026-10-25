@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Дальний рубеж · живые обои</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="preview.css"><style>.city{background-image:url(assets/station.png)}.station-modes{display:flex;gap:4px;margin:0 0 10px}.station-modes button{background:#08121bc9;border:1px solid #c0e1df26;padding:10px 14px}.station-modes button[aria-pressed=true]{background:#264b4ed9;border-color:#9ae1ce88}</style>
+</head>
+<body>
+  <script>if(new URLSearchParams(location.search).has("embed"))document.documentElement.classList.add("embedded");</script>
+  <main aria-label="Космическая станция: огни жилых колец, работающие люди и сварка в ангаре">
+    <div class="city" aria-hidden="true"></div>
+    <canvas id="atmosphere" aria-hidden="true"></canvas>
+    <div class="shade" aria-hidden="true"></div>
+  </main>
+  <aside id="controls" aria-label="Управление предпросмотром">
+    <div class="caption"><span class="eyebrow">ЖИВЫЕ ОБОИ / ГЛУБОКИЙ КОСМОС</span><h1>Дальний рубеж<span>03</span></h1><p>Далеко от дома. В центре жизни.</p></div>
+    <div id="stationModes" class="station-modes" role="group" aria-label="Режим станции"><button data-mode="shift" aria-pressed="true">Рабочая смена</button><button data-mode="night" aria-pressed="false">Ночной режим</button><button data-mode="service" aria-pressed="false">Техобслуживание</button></div>
+    <div class="actions">
+      <button id="play" title="Пауза — пробел" aria-label="Приостановить анимацию"><span id="playIcon">Ⅱ</span><span id="playText">Пауза</span></button>
+      <label class="rain-label" for="rain">Работа ангара<input id="rain" type="range" min="0" max="100" value="100" aria-label="Работа ангара"></label>
+      <button id="fullscreen" title="Полный экран — F" aria-label="Полный экран"><span>⛶</span><span>Во весь экран</span></button>
+    </div>
+    <div class="hint">пробел — пауза · F — полный экран · H — скрыть панель</div>
+  </aside>
+  <div id="error" role="alert" hidden>Не удалось загрузить фон. Откройте файл из полной папки обоев.</div>
+  <script src="station-data-browser.js"></script>
+  <script src="station-motion-browser.js"></script>
+  <script src="station-relief-data-browser.js"></script>
+  <script src="station-lighting-browser.js"></script>
+  <script src="station-relief.js"></script>
+  <script src="station-scene.js"></script>
+</body>
+</html>

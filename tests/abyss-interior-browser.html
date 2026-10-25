@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Бездна — жизнь в главном зале</title>
+<style>
+  body{margin:10px;background:#0c171e;color:#d9e6e9;font:13px system-ui}
+  h1{font-size:16px;margin:0 0 5px}#status{margin:0 0 7px;color:#9ab8c2}
+  canvas{display:block;width:min(100%,1200px);height:auto;max-height:600px}
+  details{margin-top:8px}pre{white-space:pre-wrap;font-size:11px}
+</style>
+<h1>Бездна — главный зал в три момента времени</h1>
+<div id="status" role="status">Загрузка…</div>
+<canvas id="interiorFrames" width="1200" height="600" aria-label="Увеличенные панорамы главного зала на нулевой, восьмой и двадцатой секундах"></canvas>
+<details><summary>Данные кадров</summary><pre id="report"></pre></details>
+<script src="../abyss-interior.js"></script>
+<script>
+(async()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),canvas=$('interiorFrames'),ctx=canvas.getContext('2d');
+  try{
+    const photo=new Image();photo.src='../assets/abyss.png';await photo.decode();
+    const interior=window.createAbyssInterior(photo),times=[0,8,20];
+    const frame=document.createElement('canvas');frame.width=1672;frame.height=941;
+    const p=frame.getContext('2d',{willReadFrequently:true});
+    const crop={x:842,y:255,w:428,h:86},scale=2.08,dw=crop.w*scale,dh=crop.h*scale;
+    const report=[];
+    ctx.fillStyle='#0c171e';ctx.fillRect(0,0,1200,600);ctx.textBaseline='top';
+    times.forEach((time,row)=>{
+      const y=row*200,state=window.ABYSS_INTERIOR.sample(time);
+      p.clearRect(0,0,1672,941);p.drawImage(photo,0,0);interior.render(p,time);
+      ctx.fillStyle='#d9e6e9';ctx.font='bold 18px system-ui';ctx.fillText(`t = ${time} с`,16,y+18);
+      ctx.fillStyle='#9ab8c2';ctx.font='12px system-ui';
+      ctx.fillText(`Фигур: ${state.people.length}`,16,y+47);
+      ctx.fillText('Фото + интерьер',16,y+67);
+      ctx.fillText('Увеличение ×2,08',16,y+87);
+      ctx.drawImage(frame,crop.x,crop.y,crop.w,crop.h,174+(1010-dw)/2,y+10,dw,dh);
+      ctx.strokeStyle='#293e48';ctx.strokeRect(.5,y+.5,1199,199);
+      report.push({time,state});
+    });
+    canvas.dataset.ready='true';canvas.dataset.times=times.join(',');
+    canvas.dataset.people=String(window.ABYSS_INTERIOR.sample(0).people.length);
+    $('status').textContent='READY · панорамы t=0 / 8 / 20 с · только фото и интерьер · без воды, внешнего света и переходов';
+    $('report').textContent=JSON.stringify({crop,scale,frames:report},null,2);
+  }catch(error){$('status').textContent='FAIL: '+error.message;$('report').textContent=error.stack;console.error(error);}
+})();
+</script>
+</html>

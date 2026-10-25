@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Nightfall — Живые обои
+Comment=Коллекция атмосферных живых обоев для рабочего стола
+Exec=gnome-extensions prefs nightfall@local
+TryExec=gnome-extensions
+Icon=nightfall-wallpaper
+Terminal=false
+Categories=Settings;DesktopSettings;
+Keywords=обои;живые обои;ночь;полярное сияние;wallpaper;nightfall;
+StartupNotify=true

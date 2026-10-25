@@ -1,0 +1,4391 @@
+{
+  "result": "PASS",
+  "times": [
+    0,
+    4,
+    9,
+    17,
+    24,
+    44,
+    180,
+    600
+  ],
+  "stormTime": 0,
+  "architectureUnchanged": true,
+  "cloudsMoving": true,
+  "earlyMotionVisible": true,
+  "earlyChange": {
+    "maximum": 145,
+    "mean": 6.23155,
+    "changedPixels": 80720,
+    "perceptiblePixels": 68762,
+    "pixels": 85800
+  },
+  "photographicFlowRightward": true,
+  "coherentCloudShapes": true,
+  "cloudShapeDiagnostic": {
+    "method": "The same unmasked cloud material is matched over four-second intervals at 0, 180 and 600 seconds and near texture wrapping. One coherent translation must retain the same displacement across three separated heights.",
+    "intervals": [
+      {
+        "from": 0,
+        "to": 4,
+        "expectedDisplacement": 3.4,
+        "horizontalSpread": 0,
+        "shapePreserved": true
+      },
+      {
+        "from": 18,
+        "to": 22,
+        "expectedDisplacement": 3.4,
+        "horizontalSpread": 0,
+        "shapePreserved": true
+      },
+      {
+        "from": 22,
+        "to": 26,
+        "expectedDisplacement": 3.4,
+        "horizontalSpread": 0,
+        "shapePreserved": true
+      },
+      {
+        "from": 40,
+        "to": 44,
+        "expectedDisplacement": 3.4,
+        "horizontalSpread": 0,
+        "shapePreserved": true
+      },
+      {
+        "from": 176,
+        "to": 180,
+        "expectedDisplacement": 3.4,
+        "horizontalSpread": 0,
+        "shapePreserved": true
+      },
+      {
+        "from": 596,
+        "to": 600,
+        "expectedDisplacement": 3.4,
+        "horizontalSpread": 0,
+        "shapePreserved": true
+      },
+      {
+        "from": 1115.6470588235295,
+        "to": 1119.6470588235295,
+        "expectedDisplacement": 3.4,
+        "horizontalSpread": 0,
+        "shapePreserved": true
+      }
+    ]
+  },
+  "directionalDiagnostic": {
+    "method": "Correlation of smoothed GPU temporal differences over 0–0.75 s and 4–4.75 s. Diagnostic evidence only; inspect animation for naturalness.",
+    "bands": [
+      {
+        "sourceY": [
+          498,
+          550
+        ],
+        "displacementX": 3,
+        "displacementY": 0,
+        "correlation": 0.99916,
+        "stationaryCorrelation": 0.59269,
+        "gainOverStationary": 0.40647,
+        "rightwardEvidence": true
+      },
+      {
+        "sourceY": [
+          562,
+          614
+        ],
+        "displacementX": 3,
+        "displacementY": 0,
+        "correlation": 0.99874,
+        "stationaryCorrelation": 0.60728,
+        "gainOverStationary": 0.39146,
+        "rightwardEvidence": true
+      },
+      {
+        "sourceY": [
+          626,
+          678
+        ],
+        "displacementX": 3,
+        "displacementY": 0,
+        "correlation": 0.99883,
+        "stationaryCorrelation": 0.59008,
+        "gainOverStationary": 0.40875,
+        "rightwardEvidence": true
+      }
+    ]
+  },
+  "photographicDriftDiagnostic": {
+    "method": "Direct correlation of smoothed photographic luminance over four-second intervals, including both sides of the former 22-second reset and the late spatial texture seam. Positive displacement is rightward. Every interval must have rightward evidence in at least two of its three bands; late intervals also expose accumulated deformation.",
+    "intervals": [
+      {
+        "from": 0,
+        "to": 4,
+        "bands": [
+          {
+            "sourceY": [
+              498,
+              550
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99955,
+            "stationaryCorrelation": 0.9716,
+            "gainOverStationary": 0.02795,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              562,
+              614
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99948,
+            "stationaryCorrelation": 0.96628,
+            "gainOverStationary": 0.0332,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              626,
+              678
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99956,
+            "stationaryCorrelation": 0.97083,
+            "gainOverStationary": 0.02873,
+            "rightwardEvidence": true
+          }
+        ]
+      },
+      {
+        "from": 18,
+        "to": 22,
+        "bands": [
+          {
+            "sourceY": [
+              498,
+              550
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99965,
+            "stationaryCorrelation": 0.97647,
+            "gainOverStationary": 0.02317,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              562,
+              614
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99937,
+            "stationaryCorrelation": 0.97077,
+            "gainOverStationary": 0.02861,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              626,
+              678
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99955,
+            "stationaryCorrelation": 0.96995,
+            "gainOverStationary": 0.02961,
+            "rightwardEvidence": true
+          }
+        ]
+      },
+      {
+        "from": 22,
+        "to": 26,
+        "bands": [
+          {
+            "sourceY": [
+              498,
+              550
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99965,
+            "stationaryCorrelation": 0.97729,
+            "gainOverStationary": 0.02236,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              562,
+              614
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99937,
+            "stationaryCorrelation": 0.97145,
+            "gainOverStationary": 0.02792,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              626,
+              678
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99953,
+            "stationaryCorrelation": 0.96956,
+            "gainOverStationary": 0.02997,
+            "rightwardEvidence": true
+          }
+        ]
+      },
+      {
+        "from": 40,
+        "to": 44,
+        "bands": [
+          {
+            "sourceY": [
+              498,
+              550
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99964,
+            "stationaryCorrelation": 0.97637,
+            "gainOverStationary": 0.02327,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              562,
+              614
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99958,
+            "stationaryCorrelation": 0.97754,
+            "gainOverStationary": 0.02204,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              626,
+              678
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99951,
+            "stationaryCorrelation": 0.96785,
+            "gainOverStationary": 0.03166,
+            "rightwardEvidence": true
+          }
+        ]
+      },
+      {
+        "from": 176,
+        "to": 180,
+        "bands": [
+          {
+            "sourceY": [
+              498,
+              550
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99961,
+            "stationaryCorrelation": 0.97468,
+            "gainOverStationary": 0.02493,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              562,
+              614
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99947,
+            "stationaryCorrelation": 0.97967,
+            "gainOverStationary": 0.0198,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              626,
+              678
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99947,
+            "stationaryCorrelation": 0.9646,
+            "gainOverStationary": 0.03487,
+            "rightwardEvidence": true
+          }
+        ]
+      },
+      {
+        "from": 596,
+        "to": 600,
+        "bands": [
+          {
+            "sourceY": [
+              498,
+              550
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99936,
+            "stationaryCorrelation": 0.95893,
+            "gainOverStationary": 0.04043,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              562,
+              614
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99843,
+            "stationaryCorrelation": 0.95705,
+            "gainOverStationary": 0.04138,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              626,
+              678
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99934,
+            "stationaryCorrelation": 0.95671,
+            "gainOverStationary": 0.04263,
+            "rightwardEvidence": true
+          }
+        ]
+      },
+      {
+        "from": 1115.6470588235295,
+        "to": 1119.6470588235295,
+        "bands": [
+          {
+            "sourceY": [
+              498,
+              550
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99972,
+            "stationaryCorrelation": 0.97968,
+            "gainOverStationary": 0.02004,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              562,
+              614
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99824,
+            "stationaryCorrelation": 0.96106,
+            "gainOverStationary": 0.03717,
+            "rightwardEvidence": true
+          },
+          {
+            "sourceY": [
+              626,
+              678
+            ],
+            "displacementX": 3,
+            "displacementY": 0,
+            "correlation": 0.99967,
+            "stationaryCorrelation": 0.97665,
+            "gainOverStationary": 0.02302,
+            "rightwardEvidence": true
+          }
+        ]
+      }
+    ]
+  },
+  "formerCycleResetDiagnostic": {
+    "from": 0,
+    "to": 44,
+    "exactRepeat": false,
+    "maximum": 149,
+    "mean": 18.08283,
+    "changedPixels": 82070,
+    "perceptiblePixels": 80930,
+    "pixels": 85800
+  },
+  "spatialSeam": {
+    "point": {
+      "x": 950,
+      "y": 590
+    },
+    "speed": 0.85,
+    "time": 1117.6470588235295,
+    "textureWidth": 3344,
+    "localPatch": {
+      "name": "Непосредственно вокруг пространственного стыка",
+      "x": 930,
+      "y": 570,
+      "w": 40,
+      "h": 40
+    }
+  },
+  "temporallySmooth": true,
+  "halfStepDiagnostic": {
+    "method": "Actual t+0.025 frame minus the linear midpoint of t and t+0.05 frames. Residuals identify abrupt temporal changes independently of high-contrast photographic edges.",
+    "maximum": 1,
+    "meanMaximum": 0.14438
+  },
+  "thresholds": {
+    "architectureMaximum": 0,
+    "earlyMeanMinimum": 2,
+    "earlyPixelChangeMinimum": 2,
+    "earlyChangedFractionMinimum": 0.25,
+    "cloudMeanMinimum": 0.06,
+    "cloudChangedFractionMinimum": 0.05,
+    "temporalMeanMaximum": 1,
+    "temporalMaximum": 16,
+    "rightwardBandsPerIntervalMinimum": 2,
+    "shapeCorrelationMinimum": 0.98,
+    "shapeDisplacementTolerance": 1,
+    "shapeHorizontalSpreadMaximum": 1,
+    "shapeVerticalDisplacementMaximum": 1
+  },
+  "diagnostics": {
+    "renderer": "coherent-photographic-clouds",
+    "cloudDirection": "right",
+    "cloudLayers": 1,
+    "photographicClouds": true,
+    "temporalCrossfade": false,
+    "proceduralMist": false,
+    "accumulatingShear": false,
+    "lowerLeft": "original-photograph",
+    "textureWidth": 3344,
+    "speed": {
+      "speed": 0.85,
+      "farSpeed": 0.85,
+      "nearSpeed": 0.85,
+      "textureWidth": 3344
+    },
+    "protectedBuildings": 10,
+    "stormEvents": 4
+  },
+  "comparisons": [
+    {
+      "windTime": 4,
+      "architecture": [
+        {
+          "name": "Освещённое помещение левой башни",
+          "center": [
+            480,
+            650
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижний центральный фасад",
+          "center": [
+            540,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижняя правая опора башни",
+          "center": [
+            610,
+            730
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Фасад у границы тумана",
+          "center": [
+            620,
+            757
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Левая стойка ограждения",
+          "center": [
+            263,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Стойка ограждения под башней",
+          "center": [
+            444,
+            740
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Центральная стойка ограждения",
+          "center": [
+            831,
+            760
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Правая стойка ограждения",
+          "center": [
+            1279,
+            800
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина слева",
+          "center": [
+            700,
+            693
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина справа",
+          "center": [
+            1050,
+            719
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Средняя поперечина справа",
+          "center": [
+            1100,
+            772
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Нижняя поперечина",
+          "center": [
+            1000,
+            846
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба слева на переднем плане",
+          "center": [
+            180,
+            756
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба справа на переднем плане",
+          "center": [
+            1524,
+            744
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Настил технического балкона",
+          "center": [
+            705,
+            866
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Исходные облака слева от башни",
+          "center": [
+            236.5,
+            592
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 8450
+        },
+        {
+          "name": "Исходные облака внизу слева",
+          "center": [
+            214.5,
+            636.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака за левым ограждением",
+          "center": [
+            364.5,
+            696.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака под левым фасадом",
+          "center": [
+            509.5,
+            750.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 640
+        },
+        {
+          "name": "Исходные облака над левым настилом",
+          "center": [
+            579.5,
+            787.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 960
+        }
+      ],
+      "clouds": [
+        {
+          "name": "Облачный океан в центре",
+          "maximum": 115,
+          "mean": 5.93945,
+          "changedPixels": 31679,
+          "perceptiblePixels": 26352,
+          "pixels": 32200
+        },
+        {
+          "name": "Облака за ограждением справа",
+          "maximum": 80,
+          "mean": 6.96669,
+          "changedPixels": 11669,
+          "perceptiblePixels": 10217,
+          "pixels": 13300
+        }
+      ]
+    },
+    {
+      "windTime": 9,
+      "architecture": [
+        {
+          "name": "Освещённое помещение левой башни",
+          "center": [
+            480,
+            650
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижний центральный фасад",
+          "center": [
+            540,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижняя правая опора башни",
+          "center": [
+            610,
+            730
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Фасад у границы тумана",
+          "center": [
+            620,
+            757
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Левая стойка ограждения",
+          "center": [
+            263,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Стойка ограждения под башней",
+          "center": [
+            444,
+            740
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Центральная стойка ограждения",
+          "center": [
+            831,
+            760
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Правая стойка ограждения",
+          "center": [
+            1279,
+            800
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина слева",
+          "center": [
+            700,
+            693
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина справа",
+          "center": [
+            1050,
+            719
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Средняя поперечина справа",
+          "center": [
+            1100,
+            772
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Нижняя поперечина",
+          "center": [
+            1000,
+            846
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба слева на переднем плане",
+          "center": [
+            180,
+            756
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба справа на переднем плане",
+          "center": [
+            1524,
+            744
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Настил технического балкона",
+          "center": [
+            705,
+            866
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Исходные облака слева от башни",
+          "center": [
+            236.5,
+            592
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 8450
+        },
+        {
+          "name": "Исходные облака внизу слева",
+          "center": [
+            214.5,
+            636.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака за левым ограждением",
+          "center": [
+            364.5,
+            696.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака под левым фасадом",
+          "center": [
+            509.5,
+            750.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 640
+        },
+        {
+          "name": "Исходные облака над левым настилом",
+          "center": [
+            579.5,
+            787.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 960
+        }
+      ],
+      "clouds": [
+        {
+          "name": "Облачный океан в центре",
+          "maximum": 112,
+          "mean": 9.69072,
+          "changedPixels": 32035,
+          "perceptiblePixels": 29660,
+          "pixels": 32200
+        },
+        {
+          "name": "Облака за ограждением справа",
+          "maximum": 97,
+          "mean": 12.46526,
+          "changedPixels": 11856,
+          "perceptiblePixels": 11225,
+          "pixels": 13300
+        }
+      ]
+    },
+    {
+      "windTime": 17,
+      "architecture": [
+        {
+          "name": "Освещённое помещение левой башни",
+          "center": [
+            480,
+            650
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижний центральный фасад",
+          "center": [
+            540,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижняя правая опора башни",
+          "center": [
+            610,
+            730
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Фасад у границы тумана",
+          "center": [
+            620,
+            757
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Левая стойка ограждения",
+          "center": [
+            263,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Стойка ограждения под башней",
+          "center": [
+            444,
+            740
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Центральная стойка ограждения",
+          "center": [
+            831,
+            760
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Правая стойка ограждения",
+          "center": [
+            1279,
+            800
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина слева",
+          "center": [
+            700,
+            693
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина справа",
+          "center": [
+            1050,
+            719
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Средняя поперечина справа",
+          "center": [
+            1100,
+            772
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Нижняя поперечина",
+          "center": [
+            1000,
+            846
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба слева на переднем плане",
+          "center": [
+            180,
+            756
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба справа на переднем плане",
+          "center": [
+            1524,
+            744
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Настил технического балкона",
+          "center": [
+            705,
+            866
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Исходные облака слева от башни",
+          "center": [
+            236.5,
+            592
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 8450
+        },
+        {
+          "name": "Исходные облака внизу слева",
+          "center": [
+            214.5,
+            636.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака за левым ограждением",
+          "center": [
+            364.5,
+            696.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака под левым фасадом",
+          "center": [
+            509.5,
+            750.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 640
+        },
+        {
+          "name": "Исходные облака над левым настилом",
+          "center": [
+            579.5,
+            787.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 960
+        }
+      ],
+      "clouds": [
+        {
+          "name": "Облачный океан в центре",
+          "maximum": 121,
+          "mean": 13.05992,
+          "changedPixels": 32128,
+          "perceptiblePixels": 30985,
+          "pixels": 32200
+        },
+        {
+          "name": "Облака за ограждением справа",
+          "maximum": 115,
+          "mean": 18.81153,
+          "changedPixels": 11921,
+          "perceptiblePixels": 11589,
+          "pixels": 13300
+        }
+      ]
+    },
+    {
+      "windTime": 24,
+      "architecture": [
+        {
+          "name": "Освещённое помещение левой башни",
+          "center": [
+            480,
+            650
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижний центральный фасад",
+          "center": [
+            540,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижняя правая опора башни",
+          "center": [
+            610,
+            730
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Фасад у границы тумана",
+          "center": [
+            620,
+            757
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Левая стойка ограждения",
+          "center": [
+            263,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Стойка ограждения под башней",
+          "center": [
+            444,
+            740
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Центральная стойка ограждения",
+          "center": [
+            831,
+            760
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Правая стойка ограждения",
+          "center": [
+            1279,
+            800
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина слева",
+          "center": [
+            700,
+            693
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина справа",
+          "center": [
+            1050,
+            719
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Средняя поперечина справа",
+          "center": [
+            1100,
+            772
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Нижняя поперечина",
+          "center": [
+            1000,
+            846
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба слева на переднем плане",
+          "center": [
+            180,
+            756
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба справа на переднем плане",
+          "center": [
+            1524,
+            744
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Настил технического балкона",
+          "center": [
+            705,
+            866
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Исходные облака слева от башни",
+          "center": [
+            236.5,
+            592
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 8450
+        },
+        {
+          "name": "Исходные облака внизу слева",
+          "center": [
+            214.5,
+            636.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака за левым ограждением",
+          "center": [
+            364.5,
+            696.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака под левым фасадом",
+          "center": [
+            509.5,
+            750.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 640
+        },
+        {
+          "name": "Исходные облака над левым настилом",
+          "center": [
+            579.5,
+            787.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 960
+        }
+      ],
+      "clouds": [
+        {
+          "name": "Облачный океан в центре",
+          "maximum": 130,
+          "mean": 14.84821,
+          "changedPixels": 32158,
+          "perceptiblePixels": 31263,
+          "pixels": 32200
+        },
+        {
+          "name": "Облака за ограждением справа",
+          "maximum": 131,
+          "mean": 22.60837,
+          "changedPixels": 11926,
+          "perceptiblePixels": 11652,
+          "pixels": 13300
+        }
+      ]
+    },
+    {
+      "windTime": 44,
+      "architecture": [
+        {
+          "name": "Освещённое помещение левой башни",
+          "center": [
+            480,
+            650
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижний центральный фасад",
+          "center": [
+            540,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижняя правая опора башни",
+          "center": [
+            610,
+            730
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Фасад у границы тумана",
+          "center": [
+            620,
+            757
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Левая стойка ограждения",
+          "center": [
+            263,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Стойка ограждения под башней",
+          "center": [
+            444,
+            740
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Центральная стойка ограждения",
+          "center": [
+            831,
+            760
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Правая стойка ограждения",
+          "center": [
+            1279,
+            800
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина слева",
+          "center": [
+            700,
+            693
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина справа",
+          "center": [
+            1050,
+            719
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Средняя поперечина справа",
+          "center": [
+            1100,
+            772
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Нижняя поперечина",
+          "center": [
+            1000,
+            846
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба слева на переднем плане",
+          "center": [
+            180,
+            756
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба справа на переднем плане",
+          "center": [
+            1524,
+            744
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Настил технического балкона",
+          "center": [
+            705,
+            866
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Исходные облака слева от башни",
+          "center": [
+            236.5,
+            592
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 8450
+        },
+        {
+          "name": "Исходные облака внизу слева",
+          "center": [
+            214.5,
+            636.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака за левым ограждением",
+          "center": [
+            364.5,
+            696.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака под левым фасадом",
+          "center": [
+            509.5,
+            750.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 640
+        },
+        {
+          "name": "Исходные облака над левым настилом",
+          "center": [
+            579.5,
+            787.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 960
+        }
+      ],
+      "clouds": [
+        {
+          "name": "Облачный океан в центре",
+          "maximum": 149,
+          "mean": 18.85305,
+          "changedPixels": 32175,
+          "perceptiblePixels": 31721,
+          "pixels": 32200
+        },
+        {
+          "name": "Облака за ограждением справа",
+          "maximum": 139,
+          "mean": 30.13609,
+          "changedPixels": 11944,
+          "perceptiblePixels": 11770,
+          "pixels": 13300
+        }
+      ]
+    },
+    {
+      "windTime": 180,
+      "architecture": [
+        {
+          "name": "Освещённое помещение левой башни",
+          "center": [
+            480,
+            650
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижний центральный фасад",
+          "center": [
+            540,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижняя правая опора башни",
+          "center": [
+            610,
+            730
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Фасад у границы тумана",
+          "center": [
+            620,
+            757
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Левая стойка ограждения",
+          "center": [
+            263,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Стойка ограждения под башней",
+          "center": [
+            444,
+            740
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Центральная стойка ограждения",
+          "center": [
+            831,
+            760
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Правая стойка ограждения",
+          "center": [
+            1279,
+            800
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина слева",
+          "center": [
+            700,
+            693
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина справа",
+          "center": [
+            1050,
+            719
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Средняя поперечина справа",
+          "center": [
+            1100,
+            772
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Нижняя поперечина",
+          "center": [
+            1000,
+            846
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба слева на переднем плане",
+          "center": [
+            180,
+            756
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба справа на переднем плане",
+          "center": [
+            1524,
+            744
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Настил технического балкона",
+          "center": [
+            705,
+            866
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Исходные облака слева от башни",
+          "center": [
+            236.5,
+            592
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 8450
+        },
+        {
+          "name": "Исходные облака внизу слева",
+          "center": [
+            214.5,
+            636.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака за левым ограждением",
+          "center": [
+            364.5,
+            696.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака под левым фасадом",
+          "center": [
+            509.5,
+            750.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 640
+        },
+        {
+          "name": "Исходные облака над левым настилом",
+          "center": [
+            579.5,
+            787.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 960
+        }
+      ],
+      "clouds": [
+        {
+          "name": "Облачный океан в центре",
+          "maximum": 166,
+          "mean": 42.36366,
+          "changedPixels": 32199,
+          "perceptiblePixels": 32151,
+          "pixels": 32200
+        },
+        {
+          "name": "Облака за ограждением справа",
+          "maximum": 134,
+          "mean": 26.18747,
+          "changedPixels": 11930,
+          "perceptiblePixels": 11672,
+          "pixels": 13300
+        }
+      ]
+    },
+    {
+      "windTime": 600,
+      "architecture": [
+        {
+          "name": "Освещённое помещение левой башни",
+          "center": [
+            480,
+            650
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижний центральный фасад",
+          "center": [
+            540,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Нижняя правая опора башни",
+          "center": [
+            610,
+            730
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Фасад у границы тумана",
+          "center": [
+            620,
+            757
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 81
+        },
+        {
+          "name": "Левая стойка ограждения",
+          "center": [
+            263,
+            710
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Стойка ограждения под башней",
+          "center": [
+            444,
+            740
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Центральная стойка ограждения",
+          "center": [
+            831,
+            760
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Правая стойка ограждения",
+          "center": [
+            1279,
+            800
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина слева",
+          "center": [
+            700,
+            693
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Верхняя поперечина справа",
+          "center": [
+            1050,
+            719
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Средняя поперечина справа",
+          "center": [
+            1100,
+            772
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Нижняя поперечина",
+          "center": [
+            1000,
+            846
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба слева на переднем плане",
+          "center": [
+            180,
+            756
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Труба справа на переднем плане",
+          "center": [
+            1524,
+            744
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Настил технического балкона",
+          "center": [
+            705,
+            866
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 9
+        },
+        {
+          "name": "Исходные облака слева от башни",
+          "center": [
+            236.5,
+            592
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 8450
+        },
+        {
+          "name": "Исходные облака внизу слева",
+          "center": [
+            214.5,
+            636.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака за левым ограждением",
+          "center": [
+            364.5,
+            696.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 1680
+        },
+        {
+          "name": "Исходные облака под левым фасадом",
+          "center": [
+            509.5,
+            750.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 640
+        },
+        {
+          "name": "Исходные облака над левым настилом",
+          "center": [
+            579.5,
+            787.5
+          ],
+          "maximum": 0,
+          "mean": 0,
+          "changedPixels": 0,
+          "perceptiblePixels": 0,
+          "pixels": 960
+        }
+      ],
+      "clouds": [
+        {
+          "name": "Облачный океан в центре",
+          "maximum": 158,
+          "mean": 30.93989,
+          "changedPixels": 32199,
+          "perceptiblePixels": 32193,
+          "pixels": 32200
+        },
+        {
+          "name": "Облака за ограждением справа",
+          "maximum": 136,
+          "mean": 33.10885,
+          "changedPixels": 11954,
+          "perceptiblePixels": 11874,
+          "pixels": 13300
+        }
+      ]
+    }
+  ],
+  "continuity": [
+    {
+      "boundary": 10,
+      "kind": "former-cycle-boundary",
+      "samples": [
+        {
+          "from": 9.95,
+          "to": 10,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 3,
+              "mean": 0.25916,
+              "changedPixels": 14898,
+              "perceptiblePixels": 166,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 1,
+                "mean": 0.12685
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 2,
+              "mean": 0.24123,
+              "changedPixels": 5288,
+              "perceptiblePixels": 10,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.12031
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 2,
+            "mean": 0.29375,
+            "changedPixels": 791,
+            "perceptiblePixels": 9,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 0.5,
+              "mean": 0.14438
+            }
+          }
+        },
+        {
+          "from": 10,
+          "to": 10.05,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 3,
+              "mean": 0.28293,
+              "changedPixels": 16067,
+              "perceptiblePixels": 183,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 1,
+                "mean": 0.13869
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 2,
+              "mean": 0.23353,
+              "changedPixels": 5056,
+              "perceptiblePixels": 20,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.11602
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 2,
+            "mean": 0.28375,
+            "changedPixels": 749,
+            "perceptiblePixels": 19,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 1,
+              "mean": 0.13687
+            }
+          }
+        }
+      ]
+    },
+    {
+      "boundary": 11,
+      "kind": "former-cycle-boundary",
+      "samples": [
+        {
+          "from": 10.95,
+          "to": 11,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 3,
+              "mean": 0.05136,
+              "changedPixels": 2561,
+              "perceptiblePixels": 167,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 1,
+                "mean": 0.02318
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 2,
+              "mean": 0.05554,
+              "changedPixels": 1193,
+              "perceptiblePixels": 4,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.02764
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 2,
+            "mean": 0.09,
+            "changedPixels": 223,
+            "perceptiblePixels": 9,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 0.5,
+              "mean": 0.04229
+            }
+          }
+        },
+        {
+          "from": 11,
+          "to": 11.05,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 3,
+              "mean": 0.10139,
+              "changedPixels": 6215,
+              "perceptiblePixels": 167,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 1,
+                "mean": 0.04814
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 2,
+              "mean": 0.11992,
+              "changedPixels": 2956,
+              "perceptiblePixels": 14,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.05956
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 2,
+            "mean": 0.14667,
+            "changedPixels": 436,
+            "perceptiblePixels": 13,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 0.5,
+              "mean": 0.06979
+            }
+          }
+        }
+      ]
+    },
+    {
+      "boundary": 22,
+      "kind": "former-cycle-boundary",
+      "samples": [
+        {
+          "from": 21.95,
+          "to": 22,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 3,
+              "mean": 0.0446,
+              "changedPixels": 2458,
+              "perceptiblePixels": 185,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.01943
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 2,
+              "mean": 0.04837,
+              "changedPixels": 1305,
+              "perceptiblePixels": 15,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.02376
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 2,
+            "mean": 0.08563,
+            "changedPixels": 227,
+            "perceptiblePixels": 19,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 0.5,
+              "mean": 0.03677
+            }
+          }
+        },
+        {
+          "from": 22,
+          "to": 22.05,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 3,
+              "mean": 0.07141,
+              "changedPixels": 4187,
+              "perceptiblePixels": 220,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 1,
+                "mean": 0.03249
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 2,
+              "mean": 0.07281,
+              "changedPixels": 1852,
+              "perceptiblePixels": 19,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.0358
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 3,
+            "mean": 0.12292,
+            "changedPixels": 349,
+            "perceptiblePixels": 19,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 1,
+              "mean": 0.05646
+            }
+          }
+        }
+      ]
+    },
+    {
+      "boundary": 44,
+      "kind": "former-cycle-boundary",
+      "samples": [
+        {
+          "from": 43.95,
+          "to": 44,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 3,
+              "mean": 0.094,
+              "changedPixels": 5807,
+              "perceptiblePixels": 174,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.04432
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 2,
+              "mean": 0.09486,
+              "changedPixels": 2370,
+              "perceptiblePixels": 4,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.04731
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 2,
+            "mean": 0.16271,
+            "changedPixels": 521,
+            "perceptiblePixels": 25,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 0.5,
+              "mean": 0.07344
+            }
+          }
+        },
+        {
+          "from": 44,
+          "to": 44.05,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 3,
+              "mean": 0.07292,
+              "changedPixels": 4079,
+              "perceptiblePixels": 154,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.03398
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 2,
+              "mean": 0.07025,
+              "changedPixels": 1683,
+              "perceptiblePixels": 4,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.035
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 3,
+            "mean": 0.14729,
+            "changedPixels": 414,
+            "perceptiblePixels": 22,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 0.5,
+              "mean": 0.06635
+            }
+          }
+        }
+      ]
+    },
+    {
+      "boundary": 1117.6470588235295,
+      "kind": "spatial-texture-wrap",
+      "samples": [
+        {
+          "from": 1117.5970588235296,
+          "to": 1117.6470588235295,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 1,
+              "mean": 0.0028,
+              "changedPixels": 137,
+              "perceptiblePixels": 0,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.0014
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 1,
+              "mean": 0.00103,
+              "changedPixels": 28,
+              "perceptiblePixels": 0,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.00051
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 1,
+            "mean": 0.00438,
+            "changedPixels": 11,
+            "perceptiblePixels": 0,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 0.5,
+              "mean": 0.00219
+            }
+          }
+        },
+        {
+          "from": 1117.6470588235295,
+          "to": 1117.6970588235295,
+          "architecture": [
+            {
+              "name": "Освещённое помещение левой башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижний центральный фасад",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Нижняя правая опора башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Фасад у границы тумана",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 81
+            },
+            {
+              "name": "Левая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Стойка ограждения под башней",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Центральная стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Правая стойка ограждения",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Верхняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Средняя поперечина справа",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Нижняя поперечина",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба слева на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Труба справа на переднем плане",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Настил технического балкона",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 9
+            },
+            {
+              "name": "Исходные облака слева от башни",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 8450
+            },
+            {
+              "name": "Исходные облака внизу слева",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака за левым ограждением",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 1680
+            },
+            {
+              "name": "Исходные облака под левым фасадом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 640
+            },
+            {
+              "name": "Исходные облака над левым настилом",
+              "maximum": 0,
+              "mean": 0,
+              "changedPixels": 0,
+              "perceptiblePixels": 0,
+              "pixels": 960
+            }
+          ],
+          "clouds": [
+            {
+              "name": "Облачный океан в центре",
+              "maximum": 1,
+              "mean": 0.00277,
+              "changedPixels": 136,
+              "perceptiblePixels": 0,
+              "pixels": 32200,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.00139
+              }
+            },
+            {
+              "name": "Облака за ограждением справа",
+              "maximum": 1,
+              "mean": 0.00098,
+              "changedPixels": 32,
+              "perceptiblePixels": 0,
+              "pixels": 13300,
+              "halfStepResidual": {
+                "maximum": 0.5,
+                "mean": 0.00049
+              }
+            }
+          ],
+          "seam": {
+            "maximum": 1,
+            "mean": 0.00438,
+            "changedPixels": 11,
+            "perceptiblePixels": 0,
+            "pixels": 1600,
+            "halfStepResidual": {
+              "maximum": 0.5,
+              "mean": 0.00219
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

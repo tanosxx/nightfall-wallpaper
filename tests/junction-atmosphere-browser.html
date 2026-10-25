@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><title>Junction atmosphere inspection</title>
+<style>body{background:#0c141b;color:#d5e2e7;font:15px system-ui;margin:16px}button{background:#274958;color:white;border:1px solid #67808c;border-radius:5px;padding:9px;margin:4px}canvas{max-width:100%;background:#050a0f}#crops{display:grid;grid-template-columns:1fr 1fr;gap:14px}#crops canvas{width:100%}#status{margin:10px 0}</style>
+<h2>Atmosphere: local clean plate / moving steam / neon</h2>
+<button id="original">Original</button><button id="t0">0s</button><button id="t1">1s</button><button id="t4">4s</button><button id="t8">8s</button><button id="play">Play</button><div id="status">Loading</div>
+<div id="crops"><div>Left rooftops<canvas id="left" width="600" height="480"></canvas></div><div>Right rooftop<canvas id="right" width="600" height="480"></canvas></div><div>Right wall vent<canvas id="wall" width="600" height="480"></canvas></div><div>Cyan neon<canvas id="neon" width="600" height="480"></canvas></div></div>
+<canvas id="scene" width="1672" height="941"></canvas>
+<script src="../junction-data.js"></script><script src="../junction-atmosphere.js"></script>
+<script>
+const scene=document.getElementById('scene'),ctx=scene.getContext('2d'),photo=new Image();let layer,time=0,original=false,playing=false,last=null;
+const areas={left:[245,48,225,180],right:[1090,45,225,180],wall:[1425,435,225,180],neon:[535,153,225,180]};
+function render(){ctx.drawImage(photo,0,0);if(!original){layer.renderBase(ctx,time);layer.render(ctx,time,.6)}for(const [id,[x,y,w,h]]of Object.entries(areas)){const c=document.getElementById(id);c.getContext('2d').drawImage(scene,x,y,w,h,0,0,c.width,c.height)}document.getElementById('status').textContent=`Ready · ${original?'original':'animated'} · ${time.toFixed(2)}s · ${JSON.stringify(layer.getDiagnostics())}`}
+for(const t of[0,1,4,8])document.getElementById('t'+t).onclick=()=>{playing=false;original=false;time=t;render()};document.getElementById('original').onclick=()=>{playing=false;original=true;render()};document.getElementById('play').onclick=()=>{original=false;playing=!playing;last=null;requestAnimationFrame(tick)};
+function tick(now){if(!playing)return;if(last!==null)time+=(now-last)/1000;last=now;render();requestAnimationFrame(tick)}
+photo.onload=async()=>{layer=createJunctionAtmosphere(photo);await layer.ready;render()};photo.src='../assets/junction.png';
+</script>

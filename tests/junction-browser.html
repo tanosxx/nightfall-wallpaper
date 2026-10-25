@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ночной узел — проверка движения</title>
+<style>
+  *{box-sizing:border-box}body{margin:18px;background:#0b141c;color:#d9e6e9;font:14px system-ui}
+  h1{font-size:19px;margin:0 0 12px}button,input{font:inherit;color:inherit;background:#1c303c;border:1px solid #45606d;border-radius:5px;padding:7px 10px}
+  button{cursor:pointer}button[aria-pressed=true]{background:#315667;border-color:#9bcad4}input[type=number]{width:100px}input[type=range]{width:110px}
+  .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}label{display:flex;align-items:center;gap:7px}
+  canvas{display:block;max-width:100%;height:auto;background:#071019}#preview{width:min(100%,1672px);border:1px solid #3a525c}
+  .crops{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-top:18px}.crops figure{margin:0}.crops canvas{margin-top:7px;border:1px solid #3a525c}
+  #lowerCrop{width:1350px}#upperCrop{width:1275px}#signalCrop{width:900px}#trafficCrop{width:1400px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}#status{margin:10px 0}
+</style>
+<h1>Ночной узел — фиксированные кадры и движение</h1>
+<div class="controls" aria-label="Время сцены">
+  <button data-time="0" disabled>0 с</button><button data-time="3" disabled>3 с</button><button data-time="6" disabled>6 с</button><button data-time="9" disabled>9 с</button><button data-time="12" disabled>12 с</button><button data-time="22" disabled>22 с</button>
+  <button data-time="36" disabled>36 с</button><button data-time="45" disabled>45 с</button><button data-time="80" disabled>80 с</button>
+  <label>Время, с <input id="time" type="number" min="0" step=".1" value="0"></label>
+  <button id="render" disabled>Показать кадр</button>
+  <button id="play" aria-pressed="false" disabled>Запустить движение</button>
+</div>
+<div class="controls" aria-label="Сравнение сцены">
+  <button id="normal" aria-pressed="true" disabled>Полная сцена</button><button id="original" aria-pressed="false" disabled>Исходное изображение</button>
+  <label>Дождь <input id="rain" type="range" min="0" max="100" value="60"><span id="rainValue">60%</span></label>
+</div>
+<p id="status" role="status">Загрузка фона и спрайтов поездов…</p>
+<canvas id="preview" width="1672" height="941" aria-label="Полный кадр железнодорожной развязки"></canvas>
+<div class="crops">
+  <figure><figcaption>Городские проезды ×2</figcaption><canvas id="trafficCrop" width="700" height="360" aria-label="Крупный план транспорта на проездах"></canvas></figure>
+  <figure><figcaption>Проезды в глубине и свободный передний путь ×1,5</figcaption><canvas id="lowerCrop" width="900" height="340" aria-label="Крупный план дорожного движения и свободных передних путей"></canvas></figure>
+  <figure><figcaption>Верхний путь ×1,5</figcaption><canvas id="upperCrop" width="850" height="190" aria-label="Крупный план поезда на верхнем уровне"></canvas></figure>
+  <figure><figcaption>Сигналы и стрелки ×3</figcaption><canvas id="signalCrop" width="300" height="220" aria-label="Крупный план железнодорожных сигналов и стрелок"></canvas></figure>
+</div>
+<details><summary>Диагностика анимации</summary><pre id="report" aria-label="Состояния поездов, сигналов и стрелок">Ожидание…</pre></details>
+<script src="../junction-data.js"></script><script src="../junction-motion.js"></script><script src="../junction-atmosphere.js"></script><script src="../junction-lights.js"></script><script src="../junction-traffic.js"></script><script src="../junction-beacons.js"></script><script src="../junction-renderer.js"></script>
+<script>
+(async()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),canvas=$('preview'),ctx=canvas.getContext('2d');
+  let renderer=null,time=0,strength=.6,view='normal',playing=false,last=null,lastPaint=-Infinity,frame;
+  function reportError(error){playing=false;cancelAnimationFrame(frame);$('status').textContent='FAIL: '+error.message;$('report').textContent=error.stack;document.title='FAIL — Ночной узел';canvas.dataset.ready='false';console.error(error);}
+  try{
+    const photo=new Image();photo.src='../assets/junction.png';await photo.decode();
+    renderer=window.createJunctionScene(photo);if(renderer.ready)await renderer.ready;
+    const W=photo.naturalWidth,H=photo.naturalHeight;canvas.width=W;canvas.height=H;
+    const crops=[['trafficCrop',620,225,700,360],['lowerCrop',620,475,900,340],['upperCrop',500,260,850,190],['signalCrop',1190,290,300,220]];
+    function draw(){
+      ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,W,H);
+      if(view==='original')ctx.drawImage(photo,0,0);else renderer.render(ctx,time,strength);
+      for(const [id,x,y,w,h] of crops){const crop=$(id),c=crop.getContext('2d');c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,w,h);c.drawImage(canvas,x,y,w,h,0,0,w,h);}
+      for(const button of document.querySelectorAll('[data-time]'))button.setAttribute('aria-pressed',String(Math.abs(Number(button.dataset.time)-time)<.001));
+      $('normal').setAttribute('aria-pressed',String(view==='normal'));$('original').setAttribute('aria-pressed',String(view==='original'));
+      $('play').setAttribute('aria-pressed',String(playing));$('play').textContent=playing?'Остановить движение':'Запустить движение';
+      $('status').textContent=`READY · ${view} · t=${time.toFixed(3)} с · ${playing?'движение':'неподвижный кадр'} · исходник ${W}×${H}`;
+      canvas.dataset.time=time.toFixed(4);canvas.dataset.ready='true';canvas.dataset.view=view;canvas.dataset.playing=String(playing);
+      if(document.activeElement!==$('time'))$('time').value=time.toFixed(3);
+      $('report').textContent=JSON.stringify({status:'READY',time,strength,view,playing,diagnostics:renderer.getDiagnostics?.(),motion:window.JUNCTION_MOTION?.sample(time)},null,2);
+    }
+    function tick(now){
+      if(!playing||document.hidden){last=null;return;}
+      if(last!==null)time+=Math.min(2,Math.max(0,(now-last)/1000));last=now;
+      try{if(now-lastPaint>=1000/30){draw();lastPaint=now;}frame=requestAnimationFrame(tick);}catch(error){reportError(error);}
+    }
+    function setPlaying(value){
+      playing=value;cancelAnimationFrame(frame);last=null;lastPaint=-Infinity;draw();
+      if(playing&&!document.hidden)frame=requestAnimationFrame(tick);
+    }
+    function seek(value){setPlaying(false);time=Math.max(0,Number(value)||0);draw();}
+    for(const button of document.querySelectorAll('button'))button.disabled=false;
+    for(const button of document.querySelectorAll('[data-time]'))button.addEventListener('click',()=>seek(button.dataset.time));
+    $('render').addEventListener('click',()=>seek($('time').value));$('time').addEventListener('change',()=>seek($('time').value));
+    $('play').addEventListener('click',()=>setPlaying(!playing));
+    for(const mode of ['normal','original'])$(mode).addEventListener('click',()=>{view=mode;draw();});
+    $('rain').addEventListener('input',()=>{strength=Number($('rain').value)/100;$('rainValue').textContent=Math.round(strength*100)+'%';draw();});
+    document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(frame);last=null;if(playing&&!document.hidden)frame=requestAnimationFrame(tick);});
+    seek(new URLSearchParams(location.search).get('time')||0);
+  }catch(error){reportError(error);}
+})();
+</script>
+</html>

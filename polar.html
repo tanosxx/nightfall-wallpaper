@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Полярный сигнал · живые обои</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="preview.css"><style>.city{background-image:url(assets/polar.png)}</style>
+</head>
+<body>
+  <script>if(new URLSearchParams(location.search).has("embed"))document.documentElement.classList.add("embedded");</script>
+  <main aria-label="Полярная станция: северное сияние, снег, огни и дирижабль">
+    <div class="city" aria-hidden="true"></div>
+    <canvas id="photo-water" aria-hidden="true"></canvas>
+    <canvas id="atmosphere" aria-hidden="true"></canvas>
+    <div class="shade" aria-hidden="true"></div>
+  </main>
+  <aside id="controls" aria-label="Управление предпросмотром">
+    <div class="caption"><span class="eyebrow">ЖИВЫЕ ОБОИ / ПОЛЯРНАЯ СТАНЦИЯ</span><h1>Полярный сигнал<span>02</span></h1><p>Кто-то всё ещё ждёт сигнала.</p></div>
+    <div class="actions">
+      <button id="play" title="Пауза — пробел" aria-label="Приостановить анимацию"><span id="playIcon">Ⅱ</span><span id="playText">Пауза</span></button>
+      <label class="rain-label" for="rain">Снег<input id="rain" type="range" min="0" max="100" value="70" aria-label="Интенсивность снега"></label>
+      <label class="rain-label" for="life">Сцена<input id="life" type="range" min="0" max="100" value="100" aria-label="Активность сцены"></label>
+      <button id="fullscreen" title="Полный экран — F" aria-label="Полный экран"><span>⛶</span><span>Во весь экран</span></button>
+    </div>
+    <div class="hint">пробел — пауза · F — полный экран · H — скрыть панель</div>
+  </aside>
+  <div id="error" role="alert" hidden>Не удалось загрузить фон. Откройте файл из полной папки обоев.</div>
+  <script src="polar-data-browser.js"></script>
+  <script src="polar-motion-browser.js"></script>
+  <script src="polar-water.js"></script>
+  <script src="polar-scene.js"></script>
+</body>
+</html>

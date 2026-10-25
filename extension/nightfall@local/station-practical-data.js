@@ -1,0 +1,1 @@
+export const POOLS = [{"file": "pool-0.png", "x": 1097, "y": 589}, {"file": "pool-1.png", "x": 1166, "y": 582}, {"file": "pool-2.png", "x": 1241, "y": 598}, {"file": "pool-3.png", "x": 1294, "y": 623}, {"file": "pool-4.png", "x": 1078, "y": 638}];

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Проверка неподвижного фасада</title>
+<style>
+  body{margin:20px;background:#0d1721;color:#e2eaf0;font:14px system-ui}h1{font-size:20px}
+  #status{font-size:17px;font-weight:600}#status[data-result=PASS]{color:#7cddad}#status[data-result=FAIL]{color:#ff9393}
+  .crops{display:flex;gap:18px;flex-wrap:wrap}figure{margin:0}canvas{display:block;width:540px;height:440px;max-width:100%;border:1px solid #426074;margin-top:8px}
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
+</style>
+<h1>Неподвижный фасад при движущихся облаках</h1>
+<p id="status" role="status">Загрузка и сравнение кадров WebGL…</p>
+<p>Проверяется только атмосфера: её движение не должно переносить фасад, освещённое помещение и нижние вертикальные опоры башни. Соседнее облако должно двигаться.</p>
+<div class="crops">
+  <figure><figcaption>Нижняя часть левой башни · 0 с · ×2</figcaption><canvas id="crop0" width="270" height="220" aria-label="Неподвижная башня в нулевой момент"></canvas></figure>
+  <figure><figcaption>Та же область · 9 с · ×2</figcaption><canvas id="crop9" width="270" height="220" aria-label="Та же башня через девять секунд"></canvas></figure>
+</div>
+<pre id="report" aria-label="Пиксельные результаты проверки">Ожидание…</pre>
+<script src="../cloudcity-atmosphere.js"></script>
+<script>
+(async()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),times=[0,9,17,24];
+  const patches=[
+    {name:'Освещённое помещение',x:476,y:646,w:9,h:9},
+    {name:'Нижний центральный фасад',x:536,y:706,w:9,h:9},
+    {name:'Нижняя правая опора',x:606,y:726,w:9,h:9},
+    {name:'Фасад у границы тумана',x:616,y:753,w:9,h:9},
+  ];
+  const cloud={name:'Движущееся облако',x:876,y:604,w:48,h:32};
+  function difference(a,b){
+    let max=0,sum=0,changed=0;
+    for(let i=0;i<a.length;i+=4){let pixelChanged=false;for(let c=0;c<3;c++){const d=Math.abs(a[i+c]-b[i+c]);max=Math.max(max,d);sum+=d;if(d>0)pixelChanged=true;}if(pixelChanged)changed++;}
+    return {maximum:max,mean:Number((sum/(a.length/4*3)).toFixed(4)),changedPixels:changed,pixels:a.length/4};
+  }
+  try{
+    const photo=new Image();photo.src='../assets/cloudcity.png';await photo.decode();
+    const renderer=window.createCloudcityAtmosphere(photo);
+    await renderer.ready;
+    const surface=Object.assign(document.createElement('canvas'),{width:photo.naturalWidth,height:photo.naturalHeight});
+    const ctx=surface.getContext('2d',{willReadFrequently:true}),frames=[];
+    for(const time of times){
+      renderer.render(ctx,time,time);
+      const read=p=>ctx.getImageData(p.x,p.y,p.w,p.h).data;
+      frames.push({time,architecture:patches.map(read),cloud:read(cloud)});
+      if(time===0||time===9)$('crop'+time).getContext('2d').drawImage(surface,400,595,270,220,0,0,270,220);
+    }
+    const comparisons=frames.slice(1).map(frame=>({
+      time:frame.time,
+      architecture:patches.map((patch,index)=>({name:patch.name,center:[patch.x+4,patch.y+4],...difference(frames[0].architecture[index],frame.architecture[index])})),
+      cloud:difference(frames[0].cloud,frame.cloud),
+    }));
+    const fixed= comparisons.every(frame=>frame.architecture.every(patch=>patch.maximum===0));
+    const flowing=comparisons.every(frame=>frame.cloud.mean>.2&&frame.cloud.changedPixels>frame.cloud.pixels*.05);
+    const result=fixed&&flowing?'PASS':'FAIL';
+    $('status').textContent=`${result} · фасад ${fixed?'неподвижен':'изменяется'} · облака ${flowing?'движутся':'не меняются достаточно'}`;
+    $('status').dataset.result=result;
+    $('report').textContent=JSON.stringify({result,times,architectureUnchanged:fixed,cloudsMoving:flowing,comparisons},null,2);
+    document.title=result+' — Неподвижный фасад';
+  }catch(error){
+    $('status').textContent='FAIL · '+error.message;$('status').dataset.result='FAIL';$('report').textContent=error.stack;document.title='FAIL — Неподвижный фасад';console.error(error);
+  }
+})();
+</script>
+</html>

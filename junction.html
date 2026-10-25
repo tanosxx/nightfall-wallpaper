@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark">
+  <title>Ночной узел · живые обои</title><link rel="icon" href="data:,"><link rel="stylesheet" href="preview.css">
+  <style>.city{background-image:url(assets/junction.png)}</style>
+</head>
+<body>
+  <script>if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('embedded');</script>
+  <main aria-label="Живой ночной город: дальний поезд, транспорт на проездах, свет в окнах, сигналы, дождь, движущийся пар и неон">
+    <div class="city" aria-hidden="true"></div><canvas id="atmosphere" aria-hidden="true"></canvas><div class="shade" aria-hidden="true"></div>
+  </main>
+  <aside id="controls" aria-label="Управление предпросмотром">
+    <div class="caption"><span class="eyebrow">ЖИВЫЕ ОБОИ / МЕЖДУ ЭТАЖАМИ ГОРОДА</span><h1>Ночной узел<span>05</span></h1><p>Последний поезд не уходит. Город продолжает движение.</p></div>
+    <div class="actions">
+      <button id="play" aria-label="Приостановить анимацию"><span id="playIcon">Ⅱ</span><span id="playText">Пауза</span></button>
+      <label class="rain-label" for="rain">Дождь<input id="rain" type="range" min="0" max="100" value="60" aria-label="Интенсивность дождя"></label>
+      <button id="fullscreen" aria-label="Полный экран"><span>⛶</span><span>Во весь экран</span></button>
+    </div><div class="hint">пробел — пауза · F — полный экран · H — скрыть панель</div>
+  </aside>
+  <div id="error" role="alert" hidden>Не удалось загрузить сцену. Откройте её из полной папки обоев.</div>
+  <script src="junction-data.js"></script><script src="junction-motion.js"></script><script src="junction-atmosphere.js"></script><script src="junction-lights.js"></script><script src="junction-traffic.js"></script><script src="junction-beacons.js"></script><script src="junction-renderer.js"></script><script src="junction-scene.js"></script>
+</body>
+</html>
